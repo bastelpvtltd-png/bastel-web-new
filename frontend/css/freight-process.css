@@ -1,0 +1,80 @@
+/* freight-process.css */
+.fp-section { padding: 5rem 0 7rem; }
+.fp-intro { margin-bottom: 4rem; }
+
+.fp-track { display: flex; flex-direction: column; max-width: 900px; margin: 0 auto; }
+
+.fp-phase {
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden; transition: border-color .3s;
+}
+.fp-phase:hover { border-color: rgba(34,212,240,.35); }
+.fp-phase-highlight { border-color: rgba(34,212,240,.3); background: var(--dark-4); }
+.fp-phase-highlight .fp-phase-header { background: linear-gradient(135deg, rgba(26,122,74,.15), rgba(34,212,240,.08)); }
+
+.fp-phase-header {
+  display: flex; align-items: center; gap: 1.5rem; padding: 1.8rem 2rem;
+  border-bottom: 1px solid var(--border); cursor: pointer;
+  transition: background .3s;
+}
+.fp-phase-header:hover { background: rgba(34,212,240,.04); }
+
+.fp-phase-num {
+  font-family: var(--font-display); font-size: 2.5rem;
+  color: var(--cyan); line-height: 1; flex-shrink: 0; min-width: 52px;
+  opacity: .7;
+}
+.fp-phase-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--text); margin-bottom: .3rem; }
+.fp-phase-sub { font-size: .8rem; color: var(--text-muted); }
+.fp-phase-icon { margin-left: auto; font-size: 2rem; flex-shrink: 0; opacity: .7; }
+
+.fp-sub-steps { padding: 1.5rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+
+.fp-sub { display: flex; gap: 1.2rem; align-items: flex-start; }
+.fp-sub-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--cyan);
+  flex-shrink: 0; margin-top: .35rem; opacity: .6;
+}
+.fp-sub strong { display: block; color: var(--text); font-size: .88rem; margin-bottom: .35rem; }
+.fp-sub p { color: var(--text-muted); font-size: .83rem; line-height: 1.65; }
+
+.fp-sub-key .fp-sub-dot { background: var(--green-bright); opacity: 1; }
+.fp-sub-alert { background: rgba(34,212,240,.04); border: 1px solid rgba(34,212,240,.15); border-radius: 4px; padding: 1rem 1.2rem; }
+.fp-sub-alert .fp-sub-dot { background: var(--cyan); opacity: 1; width: 10px; height: 10px; }
+.fp-sub-alert strong { color: var(--cyan); font-size: .9rem; }
+
+.fp-sub-list {
+  list-style: none; margin-top: .6rem; display: flex; flex-direction: column; gap: .4rem;
+}
+.fp-sub-list li {
+  font-size: .8rem; color: var(--text-muted); padding-left: 1rem; position: relative;
+}
+.fp-sub-list li::before { content: '→'; position: absolute; left: 0; color: var(--cyan); opacity: .6; }
+
+.fp-connector { display: flex; flex-direction: column; align-items: center; padding: .3rem 0; }
+.fp-line { width: 1px; height: 28px; background: linear-gradient(to bottom, var(--cyan), var(--green)); opacity: .35; }
+.fp-arrow { font-size: .75rem; color: var(--cyan); opacity: .4; margin-top: -4px; }
+
+/* DOCS GRID */
+.fp-docs-section { margin-top: 5rem; padding: 3rem; background: var(--dark-3); border: 1px solid var(--border); border-radius: 6px; max-width: 900px; margin-left: auto; margin-right: auto; }
+.fp-docs-title { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 400; color: var(--text); margin-bottom: 1.8rem; text-align: center; }
+.fp-docs-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+.fp-doc { text-align: center; padding: 1rem .5rem; border: 1px solid var(--border); border-radius: 4px; transition: border-color .3s, background .3s; }
+.fp-doc:hover { border-color: var(--cyan); background: var(--cyan-dim); }
+.fp-doc-abbr { display: block; font-family: var(--font-display); font-size: 1.1rem; color: var(--cyan); letter-spacing: .05em; margin-bottom: .3rem; }
+.fp-doc-name { font-size: .7rem; color: var(--text-muted); line-height: 1.4; }
+
+/* CTA */
+.fp-cta { text-align: center; margin-top: 5rem; padding: 4rem 2rem; background: var(--dark-3); border: 1px solid var(--border); border-radius: 6px; max-width: 900px; margin-left: auto; margin-right: auto; }
+.fp-cta h3 { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; color: var(--text); margin-bottom: .8rem; }
+.fp-cta p { color: var(--text-muted); margin-bottom: 2rem; }
+.fp-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+@media(max-width:768px) {
+  .fp-section { padding: 3rem 0 5rem; }
+  .fp-phase-header { flex-wrap: wrap; gap: 1rem; }
+  .fp-phase-icon { display: none; }
+  .fp-sub-steps { padding: 1.2rem 1.2rem 1.5rem; }
+  .fp-docs-grid { grid-template-columns: repeat(2,1fr); }
+  .fp-docs-section, .fp-cta { padding: 2rem 1.2rem; }
+}

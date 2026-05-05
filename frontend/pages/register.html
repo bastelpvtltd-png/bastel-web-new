@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Bastel Pvt Ltd</title>
+  <link rel="stylesheet" href="../css/shared.css" />
+  <link rel="stylesheet" href="../css/register.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <img class="loader-logo" src="../assets/bastel.png" alt="Bastel Logo" />
+    <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
+    <p class="loader-text">Loading Registration</p>
+  </div>
+</div>
+
+<nav class="nav" id="nav">
+  <a href="../index.html" class="nav-logo">
+    <img class="nav-logo-img" src="../assets/bastel.png" alt="Bastel Logo" />
+    <div class="nav-logo-text-wrap"><span class="nav-logo-text">BASTEL</span><span class="nav-logo-sub">PVT LTD</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html" class="nav-link" data-page="index">Home</a></li>
+    <li><a href="services.html" class="nav-link" data-page="services">Services</a></li>
+    <li><a href="freight-process.html" class="nav-link" data-page="freight-process">Freight Process</a></li>
+    <li><a href="register.html" class="nav-link" data-page="register">Register</a></li>
+    <li><a href="upcoming.html" class="nav-link upcoming-btn" data-page="upcoming">Trade Direct <span class="upcoming-badge">Soon</span></a></li>
+    <li><a href="../index.html#contact" class="nav-link contact-btn">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="../index.html" class="mob-link">Home</a></li>
+    <li><a href="services.html" class="mob-link">Services</a></li>
+    <li><a href="freight-process.html" class="mob-link">Freight Process</a></li>
+    <li><a href="register.html" class="mob-link">Register</a></li>
+    <li><a href="upcoming.html" class="mob-link mob-upcoming">Trade Direct ✦ Soon</a></li>
+    <li><a href="../index.html#contact" class="mob-link">Contact</a></li>
+  </ul>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container page-hero-content">
+    <span class="page-hero-label">Join Bastel's Trade Network</span>
+    <h1 class="page-hero-title">Exporter &amp; Importer <em>Registration</em></h1>
+    <p class="page-hero-sub">Register with Bastel Pvt Ltd to access our global trade network, priority freight handling, and dedicated customs clearance support.</p>
+  </div>
+  <div class="page-hero-line"></div>
+</div>
+
+<!-- BENEFITS -->
+<section class="reg-benefits">
+  <div class="container">
+    <div class="reg-benefits-grid reveal-up">
+      <div class="reg-benefit"><span class="reg-benefit-icon">⚡</span><h4>Priority Processing</h4><p>Registered clients receive expedited customs clearance and priority freight booking.</p></div>
+      <div class="reg-benefit"><span class="reg-benefit-icon">🌍</span><h4>Global Network Access</h4><p>Connect with verified buyers and sellers across 30+ countries through our trade network.</p></div>
+      <div class="reg-benefit"><span class="reg-benefit-icon">📊</span><h4>Dedicated Account Manager</h4><p>Your own trade specialist who understands your business and cargo requirements.</p></div>
+      <div class="reg-benefit"><span class="reg-benefit-icon">🔒</span><h4>Verified Trade Partner</h4><p>Be recognised as a Bastel Verified Exporter/Importer — trusted credentials for global trade.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTRATION FORM -->
+<section class="reg-section">
+  <div class="container">
+    <div class="reg-layout">
+      <!-- TYPE SELECTOR -->
+      <div class="reg-type-selector reveal-up">
+        <h3>I am registering as a...</h3>
+        <div class="reg-type-cards">
+          <div class="reg-card active" data-type="exporter">
+            <div class="reg-card-icon">📤</div>
+            <h4>Exporter</h4>
+            <p>I want to sell &amp; ship goods internationally through Bastel</p>
+            <ul>
+              <li>Access to international buyers</li>
+              <li>Export documentation support</li>
+              <li>Freight booking assistance</li>
+              <li>Certificate of Origin processing</li>
+            </ul>
+          </div>
+          <div class="reg-card" data-type="importer">
+            <div class="reg-card-icon">📥</div>
+            <h4>Importer</h4>
+            <p>I want to source &amp; import goods into Sri Lanka or globally</p>
+            <ul>
+              <li>Access to verified international suppliers</li>
+              <li>Import customs clearance</li>
+              <li>Duty calculation support</li>
+              <li>Last-mile delivery management</li>
+            </ul>
+          </div>
+          <div class="reg-card" data-type="both">
+            <div class="reg-card-icon">🔄</div>
+            <h4>Both</h4>
+            <p>I am engaged in both import and export trade operations</p>
+            <ul>
+              <li>Full trade cycle management</li>
+              <li>All exporter &amp; importer benefits</li>
+              <li>Cross-trade analytics</li>
+              <li>Priority on both routes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="reg-form-wrap reveal-up" style="--delay:.15s">
+        <form class="reg-form" id="registrationForm">
+          <div class="reg-form-header">
+            <h3>Registration Details</h3>
+            <p>All fields marked <span style="color:var(--cyan)">*</span> are required. Your data is stored securely.</p>
+          </div>
+
+          <input type="hidden" id="reg_type" name="trade_type" value="exporter" />
+          <div id="regAlert"></div>
+
+          <fieldset class="reg-fieldset">
+            <legend>Company / Personal Information</legend>
+            <div class="form-row">
+              <div class="form-group"><label>Full Name <span>*</span></label><input type="text" id="reg_name" name="full_name" placeholder="Your full name" required /></div>
+              <div class="form-group"><label>Company Name</label><input type="text" id="reg_company" name="company_name" placeholder="Trading / Company name" /></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Email Address <span>*</span></label><input type="email" id="reg_email" name="email" placeholder="your@email.com" required /></div>
+              <div class="form-group"><label>Phone / WhatsApp <span>*</span></label><input type="tel" id="reg_phone" name="phone" placeholder="+94 77 000 0000" required /></div>
+            </div>
+            <div class="form-group"><label>Country / Location <span>*</span></label>
+              <select id="reg_country" name="country" required>
+                <option value="">Select your country...</option>
+                <option>Sri Lanka</option>
+                <option>India</option>
+                <option>United Arab Emirates</option>
+                <option>United Kingdom</option>
+                <option>United States</option>
+                <option>China</option>
+                <option>Singapore</option>
+                <option>Australia</option>
+                <option>Germany</option>
+                <option>Japan</option>
+                <option>Malaysia</option>
+                <option>Bangladesh</option>
+                <option>Pakistan</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <fieldset class="reg-fieldset">
+            <legend>Trade Information</legend>
+            <div class="form-group"><label>Primary Trade Category <span>*</span></label>
+              <select id="reg_category" name="trade_category" required>
+                <option value="">Select category...</option>
+                <option>Agricultural Products &amp; Food</option>
+                <option>Textiles &amp; Garments</option>
+                <option>Electronics &amp; Technology</option>
+                <option>Machinery &amp; Equipment</option>
+                <option>Chemicals &amp; Raw Materials</option>
+                <option>Building Materials &amp; Construction</option>
+                <option>Consumer Goods &amp; FMCG</option>
+                <option>Medical &amp; Pharmaceutical</option>
+                <option>Automotive Parts</option>
+                <option>Gems &amp; Jewellery</option>
+                <option>Marine &amp; Seafood Products</option>
+                <option>General Merchandise</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Typical Shipment Volume</label>
+                <select name="volume">
+                  <option value="">Select volume...</option>
+                  <option>1–5 shipments/year</option>
+                  <option>6–20 shipments/year</option>
+                  <option>20–50 shipments/year</option>
+                  <option>50+ shipments/year</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Preferred Freight Mode</label>
+                <select name="freight_mode">
+                  <option value="">Select mode...</option>
+                  <option>Sea Freight (FCL)</option>
+                  <option>Sea Freight (LCL)</option>
+                  <option>Air Freight</option>
+                  <option>Both Sea &amp; Air</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group"><label>Countries You Trade With / Want to Reach</label>
+              <input type="text" name="trade_countries" placeholder="e.g. India, UAE, UK, Australia..." /></div>
+            <div class="form-group"><label>Tell Us About Your Trade Requirements</label>
+              <textarea name="requirements" rows="4" placeholder="Describe your products, typical cargo volume, any specific requirements or challenges you face in your trade operations..."></textarea>
+            </div>
+          </fieldset>
+
+          <div class="reg-consent">
+            <label class="reg-checkbox-label">
+              <input type="checkbox" id="reg_consent" required />
+              <span>I agree to Bastel Pvt Ltd's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I consent to being contacted by the Bastel team regarding my registration. <span style="color:var(--cyan)">*</span></span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary full-width reg-submit">Submit Registration →</button>
+          <p class="form-note">We'll review your registration and contact you within 2 business days · Completely free to register</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-wrap"><img class="footer-logo-img" src="../assets/bastel.png" alt="" /><div class="footer-logo">BASTEL <span>PVT LTD</span></div></div>
+      <p class="footer-tagline">Your Global Trade Catalyst</p>
+      <p class="footer-addr">145/3 Swarnachithya Road, Grandpass, Colombo 14</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col"><h5>Navigate</h5><ul><li><a href="../index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="freight-process.html">Freight Process</a></li><li><a href="register.html">Register</a></li></ul></div>
+      <div class="footer-col"><h5>Services</h5><ul><li><a href="services.html">Freight Handling</a></li><li><a href="services.html">Customs Clearing</a></li><li><a href="services.html">Fumigation</a></li><li><a href="services.html">Documentation</a></li></ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul><li><a href="mailto:bastel.pvt.ltd@gmail.com">Email Us</a></li><li>Colombo 14, Sri Lanka</li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 Bastel Pvt Ltd. All rights reserved.</p><p>Your Global Trade Catalyst</p></div>
+</footer>
+
+<button class="chatbot-toggler"><span class="open-icon" style="font-size:1.5rem">💬</span><span class="close-icon" style="font-size:1.5rem">✖</span></button>
+<div class="chatbot-window">
+  <header class="chatbot-header"><h3>Bastel Assistant</h3><span class="close-btn">✖</span></header>
+  <ul class="chatbox"><li class="chat incoming"><span class="icon">🤖</span><p>Hi! Need help with your registration? Ask me anything.</p></li></ul>
+  <div class="chat-input"><textarea placeholder="Type a message..." required></textarea><button id="send-btn">➤</button></div>
+</div>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-text">We use cookies to improve your experience. <a href="#">Learn more</a></p>
+  <div class="cookie-actions"><button class="cookie-accept" id="cookieAccept">Accept All</button><button class="cookie-decline" id="cookieDecline">Decline</button></div>
+</div>
+
+<script src="../js/shared.js"></script>
+<script src="../js/register.js"></script>
+</body>
+</html>

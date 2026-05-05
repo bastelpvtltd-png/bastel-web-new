@@ -1,0 +1,55 @@
+/* register.css */
+.reg-benefits { padding: 4rem 0 2rem; background: var(--dark-3); border-bottom: 1px solid var(--border); }
+.reg-benefits-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; }
+.reg-benefit { text-align: center; padding: 1.5rem 1rem; }
+.reg-benefit-icon { font-size: 2rem; display: block; margin-bottom: .8rem; }
+.reg-benefit h4 { color: var(--cyan); font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
+.reg-benefit p { color: var(--text-muted); font-size: .82rem; line-height: 1.6; }
+
+.reg-section { padding: 5rem 0 7rem; }
+.reg-layout { display: flex; flex-direction: column; gap: 3rem; max-width: 860px; margin: 0 auto; }
+
+/* TYPE SELECTOR */
+.reg-type-selector h3 { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 400; color: var(--text); margin-bottom: 1.5rem; }
+.reg-type-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.reg-card {
+  border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem;
+  cursor: pointer; transition: border-color .3s, background .3s, transform .3s;
+  background: var(--dark-3);
+}
+.reg-card:hover { border-color: rgba(34,212,240,.35); transform: translateY(-3px); }
+.reg-card.active { border-color: var(--cyan); background: var(--dark-4); }
+.reg-card-icon { font-size: 2rem; margin-bottom: .8rem; display: block; }
+.reg-card h4 { color: var(--text); font-size: 1rem; margin-bottom: .4rem; }
+.reg-card p { color: var(--text-muted); font-size: .78rem; line-height: 1.5; margin-bottom: .8rem; }
+.reg-card ul { list-style: none; display: flex; flex-direction: column; gap: .3rem; }
+.reg-card li { font-size: .75rem; color: var(--text-muted); padding-left: .9rem; position: relative; }
+.reg-card li::before { content: '✓'; position: absolute; left: 0; color: var(--green-bright); font-size: .7rem; }
+.reg-card.active li { color: var(--text); }
+
+/* FORM */
+.reg-form-wrap { }
+.reg-form { background: var(--dark-3); border: 1px solid var(--border); border-radius: 6px; padding: 2.5rem; }
+.reg-form-header { margin-bottom: 2rem; }
+.reg-form-header h3 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; color: var(--text); margin-bottom: .4rem; }
+.reg-form-header p { font-size: .82rem; color: var(--text-muted); }
+.reg-fieldset { border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.reg-fieldset legend { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); padding: 0 .5rem; }
+.reg-consent { margin: 1.2rem 0; }
+.reg-checkbox-label { display: flex; gap: .8rem; align-items: flex-start; cursor: pointer; }
+.reg-checkbox-label input[type=checkbox] { margin-top: .2rem; flex-shrink: 0; accent-color: var(--cyan); }
+.reg-checkbox-label span { font-size: .8rem; color: var(--text-muted); line-height: 1.6; }
+.reg-checkbox-label a { color: var(--cyan); }
+.reg-submit { margin-top: .5rem; font-size: .85rem; }
+
+.form-group label span { color: var(--cyan); }
+
+@media(max-width:900px) {
+  .reg-benefits-grid { grid-template-columns: repeat(2,1fr); }
+  .reg-type-cards { grid-template-columns: 1fr; }
+}
+@media(max-width:600px) {
+  .reg-benefits-grid { grid-template-columns: 1fr; }
+  .reg-form { padding: 1.5rem; }
+  .reg-fieldset { padding: 1.2rem 1rem; }
+}

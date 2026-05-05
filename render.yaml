@@ -1,0 +1,38 @@
+# render.yaml — Render.com deployment config
+# Docs: https://render.com/docs/render-yaml-reference
+
+services:
+  # ── BACKEND (Node.js API) ────────────────────────────────
+  - type: web
+    name: bastel-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false          # Set manually in Render dashboard
+      - key: SUPABASE_SERVICE_KEY
+        sync: false          # Set manually in Render dashboard
+      - key: ALLOWED_ORIGINS
+        sync: false          # Set to your frontend URL in dashboard
+    healthCheckPath: /health
+
+  # ── FRONTEND (Static Site) ───────────────────────────────
+  - type: web
+    name: bastel-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: echo "Static site — no build needed"
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

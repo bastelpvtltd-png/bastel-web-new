@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freight Process — Bastel Pvt Ltd</title>
+  <link rel="stylesheet" href="../css/shared.css" />
+  <link rel="stylesheet" href="../css/freight-process.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <img class="loader-logo" src="../assets/bastel.png" alt="Bastel Logo" />
+    <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
+    <p class="loader-text">Loading Freight Process</p>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="../index.html" class="nav-logo">
+    <img class="nav-logo-img" src="../assets/bastel.png" alt="Bastel Logo" />
+    <div class="nav-logo-text-wrap">
+      <span class="nav-logo-text">BASTEL</span>
+      <span class="nav-logo-sub">PVT LTD</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html" class="nav-link" data-page="index">Home</a></li>
+    <li><a href="services.html" class="nav-link" data-page="services">Services</a></li>
+    <li><a href="freight-process.html" class="nav-link" data-page="freight-process">Freight Process</a></li>
+    <li><a href="register.html" class="nav-link" data-page="register">Register</a></li>
+    <li><a href="upcoming.html" class="nav-link upcoming-btn" data-page="upcoming">Trade Direct <span class="upcoming-badge">Soon</span></a></li>
+    <li><a href="../index.html#contact" class="nav-link contact-btn">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="../index.html" class="mob-link">Home</a></li>
+    <li><a href="services.html" class="mob-link">Services</a></li>
+    <li><a href="freight-process.html" class="mob-link">Freight Process</a></li>
+    <li><a href="register.html" class="mob-link">Register</a></li>
+    <li><a href="upcoming.html" class="mob-link mob-upcoming">Trade Direct ✦ Soon</a></li>
+    <li><a href="../index.html#contact" class="mob-link">Contact</a></li>
+  </ul>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container page-hero-content">
+    <span class="page-hero-label">End-to-End Operations</span>
+    <h1 class="page-hero-title">Freight <em>Process</em></h1>
+    <p class="page-hero-sub">A complete breakdown of every step — from booking to final delivery, including all cargo handling sub-operations during transit.</p>
+  </div>
+  <div class="page-hero-line"></div>
+</div>
+
+<!-- MAIN PROCESS TRACK -->
+<section class="fp-section">
+  <div class="container">
+    <div class="fp-intro reveal-up">
+      <span class="section-label">Full Lifecycle</span>
+      <h2 class="section-title">Our Freight <em>Management Process</em></h2>
+      <p class="section-sub">Every shipment goes through a rigorous, documented process — with full transparency at every stage, including all intermediate cargo operations.</p>
+    </div>
+
+    <div class="fp-track">
+      <!-- PHASE 1 -->
+      <div class="fp-phase reveal-up" style="--delay:0.1s">
+        <div class="fp-phase-header">
+          <div class="fp-phase-num">01</div>
+          <div>
+            <h3 class="fp-phase-title">Initial Consultation &amp; Quotation</h3>
+            <p class="fp-phase-sub">Cargo assessment, route planning, and cost estimation</p>
+          </div>
+          <div class="fp-phase-icon">📋</div>
+        </div>
+        <div class="fp-sub-steps">
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Cargo Classification</strong><p>Identify HS codes, commodity type, hazardous classifications, and value for duty purposes.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Route &amp; Mode Selection</strong><p>Evaluate air vs. sea, FCL vs. LCL, transit times, and carrier options for optimal cost-efficiency.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Cost &amp; Timeline Quotation</strong><p>Provide binding quotation including freight, customs, handling, and all associated charges.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Compliance Pre-Check</strong><p>Verify import/export licensing requirements, restricted goods status, and permit needs for destination country.</p></div></div>
+        </div>
+      </div>
+
+      <div class="fp-connector"><div class="fp-line"></div><div class="fp-arrow">▼</div></div>
+
+      <!-- PHASE 2 -->
+      <div class="fp-phase reveal-up" style="--delay:0.15s">
+        <div class="fp-phase-header">
+          <div class="fp-phase-num">02</div>
+          <div>
+            <h3 class="fp-phase-title">Freight Booking</h3>
+            <p class="fp-phase-sub">Securing space on vessel or aircraft with our carrier partners</p>
+          </div>
+          <div class="fp-phase-icon">🚢</div>
+        </div>
+        <div class="fp-sub-steps">
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Carrier Selection &amp; Negotiation</strong><p>Engage shipping lines (sea) or airlines (air) to secure the most competitive rates and schedules.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Booking Confirmation</strong><p>Obtain official booking confirmation, vessel/flight number, ETD, and ETA details.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Container Allocation (FCL)</strong><p>Arrange 20' or 40' container allocation; coordinate container pickup from depot to shipper's premises.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Space Consolidation (LCL)</strong><p>For LCL, consolidate cargo at designated CFS (Container Freight Station) with other compatible shipments.</p></div></div>
+        </div>
+      </div>
+
+      <div class="fp-connector"><div class="fp-line"></div><div class="fp-arrow">▼</div></div>
+
+      <!-- PHASE 3 -->
+      <div class="fp-phase reveal-up" style="--delay:0.2s">
+        <div class="fp-phase-header">
+          <div class="fp-phase-num">03</div>
+          <div>
+            <h3 class="fp-phase-title">Pre-Shipment &amp; Loading</h3>
+            <p class="fp-phase-sub">Cargo preparation, packing, and loading operations</p>
+          </div>
+          <div class="fp-phase-icon">📦</div>
+        </div>
+        <div class="fp-sub-steps">
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Cargo Inspection &amp; Survey</strong><p>Pre-shipment inspection (PSI) by certified surveyors if required by destination country regulations.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Fumigation Treatment</strong><p>Where required, certified methyl bromide or heat treatment for wooden packaging and agricultural goods to meet ISPM 15 standards.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Container Stuffing</strong><p>Professional cargo stuffing, securing, and lashing inside container — optimising space and ensuring cargo integrity during transit.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Seal &amp; Verification</strong><p>Container sealed with customs-approved seal number; verified against packing list for accuracy.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>VGM (Verified Gross Mass)</strong><p>Weigh and submit VGM declaration to shipping line as per SOLAS regulations — mandatory for all sea cargo.</p></div></div>
+        </div>
+      </div>
+
+      <div class="fp-connector"><div class="fp-line"></div><div class="fp-arrow">▼</div></div>
+
+      <!-- PHASE 4 — EXPORT CUSTOMS -->
+      <div class="fp-phase reveal-up" style="--delay:0.25s">
+        <div class="fp-phase-header">
+          <div class="fp-phase-num">04</div>
+          <div>
+            <h3 class="fp-phase-title">Export Customs Clearance (Origin)</h3>
+            <p class="fp-phase-sub">Regulatory processing at Sri Lankan port of origin</p>
+          </div>
+          <div class="fp-phase-icon">🛂</div>
+        </div>
+        <div class="fp-sub-steps">
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Export Declaration (CusDec)</strong><p>File customs declaration via ASYCUDA World system with Sri Lanka Customs — covering all cargo details, value, and HS codes.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Document Submission</strong><p>Submit Commercial Invoice, Packing List, Certificate of Origin, Phytosanitary Certificate, and any special permits.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Customs Examination</strong><p>If flagged, coordinate physical or documentary examination by Sri Lanka Customs officers at port/airport.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Export Release &amp; Gate Pass</strong><p>Obtain customs release, port gate pass, and hand cargo over to terminal for vessel loading.</p></div></div>
+        </div>
+      </div>
+
+      <div class="fp-connector"><div class="fp-line"></div><div class="fp-arrow">▼</div></div>
+
+      <!-- PHASE 5 — IN-TRANSIT OPERATIONS -->
+      <div class="fp-phase reveal-up fp-phase-highlight" style="--delay:0.3s">
+        <div class="fp-phase-header">
+          <div class="fp-phase-num">05</div>
+          <div>
+            <h3 class="fp-phase-title">In-Transit Operations</h3>
+            <p class="fp-phase-sub">Cargo management during the international freight journey — including all intermediate handling</p>
+          </div>
+          <div class="fp-phase-icon">🌐</div>
+        </div>
+        <div class="fp-sub-steps">
+          <div class="fp-sub fp-sub-key"><span class="fp-sub-dot"></span><div><strong>Vessel Loading &amp; Departure Confirmation</strong><p>Confirm cargo loaded onto vessel at Colombo port. Receive Shipped-On-Board Bill of Lading from shipping line.</p></div></div>
+          <div class="fp-sub fp-sub-key"><span class="fp-sub-dot"></span><div><strong>Cargo Tracking (Live)</strong><p>Real-time tracking via carrier systems. Monitor vessel position, ETA updates, and any port congestion advisories at transit ports.</p></div></div>
+          <div class="fp-sub fp-sub-alert"><span class="fp-sub-dot"></span><div>
+            <strong>🔄 Vessel Transfer (Transhipment)</strong>
+            <p>If the cargo routes through a transhipment hub (e.g. Singapore, Colombo, Port Klang), we coordinate:</p>
+            <ul class="fp-sub-list">
+              <li>Monitoring of cargo discharge at transhipment port</li>
+              <li>Confirmation of cargo transfer to connecting vessel</li>
+              <li>Re-booking and amendment of shipping documents if vessel change occurs</li>
+              <li>Tracking of connecting vessel ETA at destination port</li>
+              <li>Liaison with transhipment port agents for any delays or holds</li>
+            </ul>
+          </div></div>
+          <div class="fp-sub fp-sub-alert"><span class="fp-sub-dot"></span><div>
+            <strong>📦 Removal from Containers (Unstuffing / Devanning)</strong>
+            <p>For LCL or when required at port, we manage full container devanning operations:</p>
+            <ul class="fp-sub-list">
+              <li>Arrange removal of cargo from FCL container at destination CFS</li>
+              <li>Coordinate unstuffing survey to verify cargo condition on removal</li>
+              <li>Segregation of individual shipper's cargo from consolidated containers</li>
+              <li>Condition report issuance if any damage is noted during unstuffing</li>
+              <li>Storage arrangement at CFS pending customs clearance</li>
+            </ul>
+          </div></div>
+          <div class="fp-sub fp-sub-alert"><span class="fp-sub-dot"></span><div>
+            <strong>⚓ Container Repositioning &amp; Yard Management</strong>
+            <p>Managing containers within port terminals:</p>
+            <ul class="fp-sub-list">
+              <li>Arrange container moves within terminal (yard-to-berth, stack repositioning)</li>
+              <li>Coordinate release of empty containers back to shipping line depot</li>
+              <li>Monitor detention and demurrage timelines — alert client before charges accrue</li>
+              <li>Arrange container cleaning and survey before return if required</li>
+            </ul>
+          </div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Arrival Notice &amp; Pre-Arrival Documentation</strong><p>Receive Arrival Notice from carrier. Prepare and submit pre-arrival documentation to destination customs to facilitate faster clearance.</p></div></div>
+        </div>
+      </div>
+
+      <div class="fp-connector"><div class="fp-line"></div><div class="fp-arrow">▼</div></div>
+
+      <!-- PHASE 6 — IMPORT CUSTOMS -->
+      <div class="fp-phase reveal-up" style="--delay:0.35s">
+        <div class="fp-phase-header">
+          <div class="fp-phase-num">06</div>
+          <div>
+            <h3 class="fp-phase-title">Import Customs Clearance (Destination)</h3>
+            <p class="fp-phase-sub">Regulatory processing at destination country</p>
+          </div>
+          <div class="fp-phase-icon">🏛️</div>
+        </div>
+        <div class="fp-sub-steps">
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Import Declaration Filing</strong><p>File import customs declaration at destination with correct HS codes, valuation, and country of origin details.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Duty &amp; Tax Assessment</strong><p>Facilitate payment of applicable import duties, VAT, and port handling levies on behalf of client or guide client on payment process.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Physical &amp; Documentary Examination</strong><p>If selected for examination, coordinate with destination customs for inspection and provide all supporting documents.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Customs Release</strong><p>Obtain customs release order and collect Delivery Order from shipping line after freight payment.</p></div></div>
+        </div>
+      </div>
+
+      <div class="fp-connector"><div class="fp-line"></div><div class="fp-arrow">▼</div></div>
+
+      <!-- PHASE 7 — DELIVERY -->
+      <div class="fp-phase reveal-up" style="--delay:0.4s">
+        <div class="fp-phase-header">
+          <div class="fp-phase-num">07</div>
+          <div>
+            <h3 class="fp-phase-title">Transport &amp; Final Delivery</h3>
+            <p class="fp-phase-sub">Last-mile delivery and warehouse handover</p>
+          </div>
+          <div class="fp-phase-icon">🚛</div>
+        </div>
+        <div class="fp-sub-steps">
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Port Haulage</strong><p>Arrange port-to-warehouse haulage using our owned/contracted fleet — GPS tracked and fully insured.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Delivery &amp; Offloading</strong><p>Delivery to consignee's premises with full offloading assistance. Signed Proof of Delivery (POD) obtained.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Final Survey &amp; Condition Check</strong><p>Post-delivery inspection to confirm cargo arrived in stated condition. Any discrepancies reported and documented immediately.</p></div></div>
+        </div>
+      </div>
+
+      <div class="fp-connector"><div class="fp-line"></div><div class="fp-arrow">▼</div></div>
+
+      <!-- PHASE 8 — DOCUMENTATION -->
+      <div class="fp-phase reveal-up" style="--delay:0.45s">
+        <div class="fp-phase-header">
+          <div class="fp-phase-num">08</div>
+          <div>
+            <h3 class="fp-phase-title">Final Documentation &amp; File Closure</h3>
+            <p class="fp-phase-sub">Complete document package delivery and job file closure</p>
+          </div>
+          <div class="fp-phase-icon">📁</div>
+        </div>
+        <div class="fp-sub-steps">
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Full Document Package</strong><p>Compile and deliver complete file: Bill of Lading, Commercial Invoice, Packing List, COO, Phytosanitary Certs, Customs Entries, POD.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>Final Invoice &amp; Reconciliation</strong><p>Issue final Bastel invoice with full charge breakdown. Reconcile any port, carrier, or customs cost variances.</p></div></div>
+          <div class="fp-sub"><span class="fp-sub-dot"></span><div><strong>File Archiving</strong><p>Shipment file archived securely (digital + physical) for 7 years per Sri Lanka Customs regulations.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCUMENT TYPES REFERENCE -->
+    <div class="fp-docs-section reveal-up">
+      <h3 class="fp-docs-title">Key Documents We Handle</h3>
+      <div class="fp-docs-grid">
+        <div class="fp-doc"><span class="fp-doc-abbr">BL</span><span class="fp-doc-name">Bill of Lading</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">COO</span><span class="fp-doc-name">Certificate of Origin</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">CusDec</span><span class="fp-doc-name">Customs Declaration</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">AWB</span><span class="fp-doc-name">Air Waybill</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">PC</span><span class="fp-doc-name">Phytosanitary Certificate</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">VGM</span><span class="fp-doc-name">Verified Gross Mass</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">POD</span><span class="fp-doc-name">Proof of Delivery</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">DO</span><span class="fp-doc-name">Delivery Order</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">PSI</span><span class="fp-doc-name">Pre-Shipment Inspection</span></div>
+        <div class="fp-doc"><span class="fp-doc-abbr">LC</span><span class="fp-doc-name">Letter of Credit</span></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="fp-cta reveal-up">
+      <h3>Ready to Move Your Cargo?</h3>
+      <p>Our team handles every stage — so you can focus on your business.</p>
+      <div class="fp-cta-btns">
+        <a href="../index.html#contact" class="btn-primary">Get a Freight Quote</a>
+        <a href="register.html" class="btn-ghost">Register as Exporter/Importer</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-wrap"><img class="footer-logo-img" src="../assets/bastel.png" alt="" /><div class="footer-logo">BASTEL <span>PVT LTD</span></div></div>
+      <p class="footer-tagline">Your Global Trade Catalyst</p>
+      <p class="footer-addr">145/3 Swarnachithya Road, Grandpass, Colombo 14</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col"><h5>Navigate</h5><ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="freight-process.html">Freight Process</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Services</h5><ul>
+        <li><a href="services.html">Freight Handling</a></li>
+        <li><a href="services.html">Cargo Clearing</a></li>
+        <li><a href="services.html">Fumigation</a></li>
+        <li><a href="services.html">Documentation</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul>
+        <li><a href="mailto:bastel.pvt.ltd@gmail.com">Email Us</a></li>
+        <li>Colombo 14, Sri Lanka</li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Bastel Pvt Ltd. All rights reserved.</p>
+    <p>Your Global Trade Catalyst</p>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chatbot-toggler"><span class="open-icon" style="font-size:1.5rem">💬</span><span class="close-icon" style="font-size:1.5rem">✖</span></button>
+<div class="chatbot-window">
+  <header class="chatbot-header"><h3>Bastel Assistant</h3><span class="close-btn">✖</span></header>
+  <ul class="chatbox"><li class="chat incoming"><span class="icon">🤖</span><p>Hi! Ask me about our freight process or services.</p></li></ul>
+  <div class="chat-input"><textarea placeholder="Type a message..." required></textarea><button id="send-btn">➤</button></div>
+</div>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-text">We use cookies to improve your experience. <a href="#">Learn more</a></p>
+  <div class="cookie-actions">
+    <button class="cookie-accept" id="cookieAccept">Accept All</button>
+    <button class="cookie-decline" id="cookieDecline">Decline</button>
+  </div>
+</div>
+
+<script src="../js/shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bastel Pvt Ltd — Your Global Trade Catalyst</title>
+  <link rel="stylesheet" href="css/shared.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>(function(){ emailjs.init("KbARCAcooXNHhDjZU"); })();</script>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <img class="loader-logo" src="assets/bastel.png" alt="Bastel Logo" />
+    <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
+    <p class="loader-text">Connecting Global Trade</p>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">
+    <img class="nav-logo-img" src="assets/bastel.png" alt="Bastel Logo" />
+    <div class="nav-logo-text-wrap">
+      <span class="nav-logo-text">BASTEL</span>
+      <span class="nav-logo-sub">PVT LTD</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
+    <li><a href="pages/services.html" class="nav-link" data-page="services">Services</a></li>
+    <li><a href="pages/freight-process.html" class="nav-link" data-page="freight-process">Freight Process</a></li>
+    <li><a href="pages/register.html" class="nav-link" data-page="register">Register</a></li>
+    <li><a href="pages/upcoming.html" class="nav-link upcoming-btn" data-page="upcoming">
+      Trade Direct <span class="upcoming-badge">Soon</span>
+    </a></li>
+    <li><a href="#contact" class="nav-link contact-btn">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="index.html" class="mob-link">Home</a></li>
+    <li><a href="pages/services.html" class="mob-link">Services</a></li>
+    <li><a href="pages/freight-process.html" class="mob-link">Freight Process</a></li>
+    <li><a href="pages/register.html" class="mob-link">Register</a></li>
+    <li><a href="pages/upcoming.html" class="mob-link mob-upcoming">Trade Direct ✦ Soon</a></li>
+    <li><a href="#contact" class="mob-link">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-video-wrap">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="assets/video2.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-grain"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge reveal-up" style="--delay:0.2s">
+      <span class="badge-dot"></span>
+      Colombo · Sri Lanka · Est. 2025
+    </div>
+    <h1 class="hero-title reveal-up" style="--delay:0.4s">
+      <span class="title-line">YOUR GLOBAL</span>
+      <span class="title-line accent">TRADE CATALYST</span>
+    </h1>
+    <p class="hero-sub reveal-up" style="--delay:0.6s">
+      End-to-end freight, customs clearance &amp; logistics solutions<br />connecting Sri Lanka to the world.
+    </p>
+    <div class="hero-cta reveal-up" style="--delay:0.8s">
+      <a href="pages/services.html" class="btn-primary">Explore Services</a>
+      <a href="#contact" class="btn-ghost">Get a Quote →</a>
+    </div>
+  </div>
+  <div class="hero-stats reveal-up" style="--delay:1s">
+    <div class="stat"><span class="stat-num" data-target="500">0</span><span class="stat-unit">+</span><span class="stat-label">Shipments Handled</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><span class="stat-num" data-target="30">0</span><span class="stat-unit">+</span><span class="stat-label">Countries Reached</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><span class="stat-num" data-target="100">0</span><span class="stat-unit">%</span><span class="stat-label">Compliance Rate</span></div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span></span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>FREIGHT HANDLING</span><span class="marquee-dot">✦</span>
+    <span>CARGO CLEARING</span><span class="marquee-dot">✦</span>
+    <span>TRANSPORT MANAGEMENT</span><span class="marquee-dot">✦</span>
+    <span>FUMIGATION SERVICES</span><span class="marquee-dot">✦</span>
+    <span>FINAL DOCUMENTATION</span><span class="marquee-dot">✦</span>
+    <span>IMPORT &amp; EXPORT</span><span class="marquee-dot">✦</span>
+    <span>SUPPLY CHAIN SOLUTIONS</span><span class="marquee-dot">✦</span>
+    <span>CUSTOMS HOUSE AGENCY</span><span class="marquee-dot">✦</span>
+    <span>FREIGHT HANDLING</span><span class="marquee-dot">✦</span>
+    <span>CARGO CLEARING</span><span class="marquee-dot">✦</span>
+    <span>TRANSPORT MANAGEMENT</span><span class="marquee-dot">✦</span>
+    <span>FUMIGATION SERVICES</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- SERVICES OVERVIEW -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label reveal-up">What We Do</span>
+      <h2 class="section-title reveal-up">Comprehensive Trade <br /><em>&amp; Logistics Services</em></h2>
+      <p class="section-sub reveal-up">From origin to destination, we handle every step of your supply chain with precision and expertise.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal-up" style="--delay:0.1s">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M6 36L12 12H36L42 36H6Z" stroke="currentColor" stroke-width="2"/><path d="M2 36H46" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="40" r="3" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="40" r="3" stroke="currentColor" stroke-width="2"/></svg></div>
+        <div class="service-num">01</div>
+        <h3>Freight Handling</h3>
+        <p>Full management of air and sea freight — FCL, LCL, and consolidated cargo handled with care at every port of call.</p>
+        <div class="service-tags"><span>Air Freight</span><span>Sea Freight</span><span>FCL/LCL</span></div>
+        <a href="pages/freight-process.html" class="service-link">View Full Process →</a>
+      </div>
+      <div class="service-card reveal-up" style="--delay:0.2s">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 20H32M16 28H24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 14H40" stroke="currentColor" stroke-width="2"/></svg></div>
+        <div class="service-num">02</div>
+        <h3>Cargo Clearing</h3>
+        <p>Licensed customs house agents ensuring swift, compliant clearance through all Sri Lankan and international ports.</p>
+        <div class="service-tags"><span>Customs Brokerage</span><span>Documentation</span></div>
+        <a href="pages/services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card reveal-up" style="--delay:0.3s">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M4 32H38L44 20H10L4 32Z" stroke="currentColor" stroke-width="2"/><path d="M4 32L6 40H40L42 32" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="40" r="3" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="40" r="3" stroke="currentColor" stroke-width="2"/></svg></div>
+        <div class="service-num">03</div>
+        <h3>Transport Management</h3>
+        <p>Door-to-door haulage with a reliable fleet covering island-wide delivery and port-to-warehouse transfers.</p>
+        <div class="service-tags"><span>Haulage</span><span>Last Mile</span><span>Port Pickup</span></div>
+        <a href="pages/services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card reveal-up" style="--delay:0.4s">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M24 6C24 6 10 14 10 26a14 14 0 0028 0C38 14 24 6 24 6Z" stroke="currentColor" stroke-width="2"/><path d="M18 26l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="service-num">04</div>
+        <h3>Fumigation Services</h3>
+        <p>Certified phytosanitary fumigation treatments ensuring your cargo meets all international biosecurity standards.</p>
+        <div class="service-tags"><span>Phytosanitary</span><span>Certified</span><span>Compliant</span></div>
+        <a href="pages/services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card reveal-up" style="--delay:0.5s">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M10 6H38V42H10V6Z" stroke="currentColor" stroke-width="2"/><path d="M16 16H32M16 24H32M16 32H24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="service-num">05</div>
+        <h3>Final Documentation</h3>
+        <p>Preparation and attestation of all trade documents — BL, COO, phytosanitary certs, packing lists, and more.</p>
+        <div class="service-tags"><span>Bill of Lading</span><span>COO</span><span>Certificates</span></div>
+        <a href="pages/services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card reveal-up featured-card" style="--delay:0.6s">
+        <div class="service-num">06</div>
+        <h3>Import &amp; Export Trade</h3>
+        <p>Full-spectrum trading of all legal goods. We connect buyers and sellers across the globe with end-to-end transaction management.</p>
+        <div class="service-tags"><span>Import</span><span>Export</span><span>General Merchandise</span><span>Global Trade</span></div>
+        <a href="pages/register.html" class="service-link">Register as Exporter/Importer →</a>
+        <div class="featured-bg"></div>
+      </div>
+    </div>
+    <div class="services-cta reveal-up" style="--delay:0.7s">
+      <a href="pages/services.html" class="btn-outline">View All Services</a>
+      <a href="pages/register.html" class="btn-primary">Register With Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual">
+    <div class="about-video-wrap">
+      <video autoplay muted loop playsinline class="about-video">
+        <source src="assets/video1.mp4" type="video/mp4" />
+      </video>
+      <div class="about-video-overlay"></div>
+    </div>
+    <div class="about-accent-box">
+      <p class="accent-quote">"Bridging Sri Lanka to the world, one shipment at a time."</p>
+    </div>
+  </div>
+  <div class="about-content">
+    <span class="section-label reveal-up">Who We Are</span>
+    <h2 class="section-title reveal-up">Bastel Pvt Ltd — <em>Your Trusted Partner</em></h2>
+    <p class="about-para reveal-up">Bastel (Pvt) Ltd is a fully registered Sri Lankan company engaged in the import, export, and trading of all types of legal goods. We provide comprehensive customs house agency and clearing services, freight handling, cargo documentation, fumigation coordination, and end-to-end logistics management.</p>
+    <p class="about-para reveal-up">Our expert team manages the full trade cycle: from initial quotation and freight booking through customs clearance, transport, fumigation, and final documentation — ensuring every shipment reaches its destination seamlessly.</p>
+    <div class="mvv-grid reveal-up">
+      <div class="mvv-card"><div class="mvv-icon">🎯</div><h4>Mission</h4><p>To be Sri Lanka's most trusted customs and logistics partner — delivering efficient, transparent, and cost-effective trade solutions that connect our clients to global markets.</p></div>
+      <div class="mvv-card"><div class="mvv-icon">🌐</div><h4>Vision</h4><p>To become the leading trade catalyst in South Asia, recognised for excellence in customs clearance, logistics, and supply chain management.</p></div>
+      <div class="mvv-card">
+        <div class="mvv-icon">⚡</div>
+        <h4>Core Values</h4>
+        <div class="values-accordion">
+          <div class="value-item"><div class="value-header">Integrity <span>+</span></div><div class="value-content"><p>We operate with full transparency and honesty in every transaction.</p></div></div>
+          <div class="value-item"><div class="value-header">Excellence <span>+</span></div><div class="value-content"><p>We pursue the highest standards in every service we deliver.</p></div></div>
+          <div class="value-item"><div class="value-header">Speed <span>+</span></div><div class="value-content"><p>We understand that time is money in trade, and we act accordingly.</p></div></div>
+          <div class="value-item"><div class="value-header">Compliance <span>+</span></div><div class="value-content"><p>We strictly adhere to all applicable laws, regulations, and ethical standards.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="why-bg-video">
+    <video autoplay muted loop playsinline><source src="assets/video3.mp4" /></video>
+    <div class="why-overlay"></div>
+  </div>
+  <div class="container why-content">
+    <span class="section-label reveal-up" style="color:var(--cyan)">Why Choose Us</span>
+    <h2 class="section-title reveal-up" style="color:#fff">The Bastel <em>Difference</em></h2>
+    <div class="why-grid">
+      <div class="why-card reveal-up" style="--delay:0.1s"><span class="why-icon">🛡️</span><h4>Fully Licensed &amp; Compliant</h4><p>Registered customs house agents operating within the full legal framework of Sri Lanka.</p></div>
+      <div class="why-card reveal-up" style="--delay:0.2s"><span class="why-icon">⚓</span><h4>Port-Level Expertise</h4><p>Deep relationships with Colombo port authorities, airlines, and logistics partners.</p></div>
+      <div class="why-card reveal-up" style="--delay:0.3s"><span class="why-icon">🌍</span><h4>Global Network</h4><p>Connections across 30+ countries enabling seamless import and export on every continent.</p></div>
+      <div class="why-card reveal-up" style="--delay:0.4s"><span class="why-icon">📋</span><h4>Zero Documentation Errors</h4><p>Our meticulous document preparation team ensures zero customs delays due to paperwork.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container contact-wrap">
+    <div class="contact-info reveal-up">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title">Let's Move Your <em>Cargo Forward</em></h2>
+      <p>Ready to simplify your trade operations? Reach out and our team will respond within 24 hours.</p>
+      <div class="contact-details">
+        <div class="contact-item"><div class="contact-icon">📍</div><div><strong>Address</strong><p>145/3 Swarnachithya Road,<br />Grandpass, Colombo 14, Sri Lanka</p></div></div>
+        <div class="contact-item"><div class="contact-icon">✉️</div><div><strong>Email</strong><p><a href="mailto:bastel.pvt.ltd@gmail.com">bastel.pvt.ltd@gmail.com</a></p></div></div>
+        <div class="contact-item"><div class="contact-icon">🌐</div><div><strong>Website</strong><p>www.bastelpvtltd.com</p></div></div>
+      </div>
+    </div>
+    <form class="contact-form reveal-up" id="contactForm">
+      <h3>Send Us a Message</h3>
+      <div id="formAlert"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" name="from_name" id="from_name" placeholder="Your name" required /></div>
+        <div class="form-group"><label>Email Address</label><input type="email" name="from_email" id="from_email" placeholder="your@email.com" required /></div>
+      </div>
+      <div class="form-group">
+        <label>Service Required</label>
+        <select name="service" id="service">
+          <option value="">Select a service...</option>
+          <option>Freight Handling</option>
+          <option>Cargo Clearing</option>
+          <option>Transport Management</option>
+          <option>Fumigation Services</option>
+          <option>Final Documentation</option>
+          <option>Import / Export Trade</option>
+          <option>Full Supply Chain Solution</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea name="message" id="message_content" placeholder="Tell us about your shipment requirements..." rows="4"></textarea></div>
+      <button type="submit" class="btn-primary full-width">Send Message →</button>
+      <p class="form-note">We'll respond within 24 hours · No obligation</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-wrap">
+        <img class="footer-logo-img" src="assets/bastel.png" alt="Bastel Logo" />
+        <div class="footer-logo">BASTEL <span>PVT LTD</span></div>
+      </div>
+      <p class="footer-tagline">Your Global Trade Catalyst</p>
+      <p class="footer-addr">145/3 Swarnachithya Road, Grandpass, Colombo 14</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col"><h5>Services</h5><ul>
+        <li><a href="pages/services.html">Freight Handling</a></li>
+        <li><a href="pages/services.html">Cargo Clearing</a></li>
+        <li><a href="pages/services.html">Transport</a></li>
+        <li><a href="pages/services.html">Fumigation</a></li>
+        <li><a href="pages/services.html">Documentation</a></li>
+        <li><a href="pages/services.html">Import &amp; Export</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Company</h5><ul>
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="pages/freight-process.html">Freight Process</a></li>
+        <li><a href="pages/register.html">Register</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul>
+        <li><a href="mailto:bastel.pvt.ltd@gmail.com">Email Us</a></li>
+        <li>Colombo 14, Sri Lanka</li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Bastel Pvt Ltd. All rights reserved. Registered in Sri Lanka.</p>
+    <p>Your Global Trade Catalyst</p>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chatbot-toggler">
+  <span class="open-icon" style="font-size:1.5rem">💬</span>
+  <span class="close-icon" style="font-size:1.5rem">✖</span>
+</button>
+<div class="chatbot-window">
+  <header class="chatbot-header"><h3>Bastel Assistant</h3><span class="close-btn">✖</span></header>
+  <ul class="chatbox">
+    <li class="chat incoming"><span class="icon">🤖</span><p>Hi there! 👋 How can I help you with Bastel Pvt Ltd services?</p></li>
+  </ul>
+  <div class="chat-input"><textarea placeholder="Type a message..." required></textarea><button id="send-btn">➤</button></div>
+</div>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-text">We use cookies to improve your experience. By continuing, you agree to our use of cookies for analytics and functionality. <a href="#">Learn more</a></p>
+  <div class="cookie-actions">
+    <button class="cookie-accept" id="cookieAccept">Accept All</button>
+    <button class="cookie-decline" id="cookieDecline">Decline</button>
+  </div>
+</div>
+
+<script src="js/shared.js"></script>
+<script src="js/contact.js"></script>
+</body>
+</html>
