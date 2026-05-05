@@ -184,3 +184,4 @@ Keys are in `frontend/index.html` — no changes needed unless you regenerate th
 | Email | EmailJS |
 | Deploy | Render.com |
 | Fonts | Google Fonts (Bebas Neue, Cormorant, DM Sans) |
+"# bastel-web-new" 
