@@ -75,7 +75,7 @@ npm run dev        # starts on http://localhost:3000
 
 Test backend is running:
 ```bash
-curl http://localhost:3000/health
+curl http://localhost:5500/health
 # → {"status":"ok","ts":"..."}
 ```
 
@@ -98,7 +98,7 @@ No build step needed. Pure HTML/CSS/JS.
 git init
 git add .
 git commit -m "Initial commit — Bastel full stack"
-git remote add origin https://github.com/YOUR_USERNAME/bastel.git
+git remote add origin https://github.com/bastelpvtltd-png/bastel-web-new.git
 git push -u origin main
 ```
 
@@ -184,4 +184,3 @@ Keys are in `frontend/index.html` — no changes needed unless you regenerate th
 | Email | EmailJS |
 | Deploy | Render.com |
 | Fonts | Google Fonts (Bebas Neue, Cormorant, DM Sans) |
-"# bastel-web-new" 

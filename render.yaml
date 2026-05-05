@@ -4,7 +4,7 @@
 services:
   # ── BACKEND (Node.js API) ────────────────────────────────
   - type: web
-    name: bastel-backend
+    name: bastelpl-backend
     runtime: node
     rootDir: backend
     buildCommand: npm install
