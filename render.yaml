@@ -23,7 +23,7 @@ services:
 
   # ── FRONTEND (Static Site) ───────────────────────────────
   - type: web
-    name: bastel-frontend
+    name: bastelpl-frontend
     runtime: static
     rootDir: frontend
     buildCommand: echo "Static site — no build needed"
