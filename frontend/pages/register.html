@@ -157,6 +157,14 @@
           </fieldset>
 
           <fieldset class="reg-fieldset">
+            <legend>Business Registration</legend>
+            <div class="form-row">
+              <div class="form-group"><label>TIN / VAT Number</label><input type="text" id="reg_tin_vat" name="tin_vat" placeholder="e.g. TIN-2525/7000" /></div>
+              <div class="form-group"><label>BR Number (Business Registration)</label><input type="text" id="reg_br_number" name="br_number" placeholder="e.g. PV 12345678" /></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="reg-fieldset">
             <legend>Trade Information</legend>
             <div class="form-group"><label>Primary Trade Category <span>*</span></label>
               <select id="reg_category" name="trade_category" required>
@@ -198,8 +206,19 @@
             </div>
             <div class="form-group"><label>Countries You Trade With / Want to Reach</label>
               <input type="text" name="trade_countries" placeholder="e.g. India, UAE, UK, Australia..." /></div>
+            <div class="form-group"><label>Relevant Commodity <span>*</span></label>
+              <input type="text" id="reg_commodity" name="commodity" placeholder="e.g. Cinnamon, Ceylon Tea, Coconut Fibre..." required /></div>
             <div class="form-group"><label>Tell Us About Your Trade Requirements</label>
               <textarea name="requirements" rows="4" placeholder="Describe your products, typical cargo volume, any specific requirements or challenges you face in your trade operations..."></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset class="reg-fieldset">
+            <legend>Commodity Images</legend>
+            <p class="form-note" style="margin-bottom:12px;">Upload up to 2 photos of your commodity/product (JPG or PNG, max 10MB each — will be compressed automatically).</p>
+            <div class="form-row">
+              <div class="form-group"><label>Image 1</label><input type="file" id="reg_image1" name="image1" accept="image/*" /></div>
+              <div class="form-group"><label>Image 2</label><input type="file" id="reg_image2" name="image2" accept="image/*" /></div>
             </div>
           </fieldset>
 

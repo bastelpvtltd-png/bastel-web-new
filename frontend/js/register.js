@@ -24,27 +24,36 @@
     const orig = btn.textContent;
     btn.textContent = 'Submitting...'; btn.disabled = true;
 
-    const payload = {
+    const fields = {
       trade_type:    document.getElementById('reg_type').value,
       full_name:     document.getElementById('reg_name').value,
       company_name:  document.getElementById('reg_company').value,
       email:         document.getElementById('reg_email').value,
       phone:         document.getElementById('reg_phone').value,
       country:       document.getElementById('reg_country').value,
+      tin_vat:       document.getElementById('reg_tin_vat').value,
+      br_number:     document.getElementById('reg_br_number').value,
       trade_category:document.getElementById('reg_category').value,
+      commodity:     document.getElementById('reg_commodity').value,
       volume:        form.querySelector('[name=volume]')?.value || '',
       freight_mode:  form.querySelector('[name=freight_mode]')?.value || '',
       trade_countries:form.querySelector('[name=trade_countries]')?.value || '',
       requirements:  form.querySelector('[name=requirements]')?.value || '',
     };
 
-    BLog.info('Registration form submitted', { name: payload.full_name, type: payload.trade_type });
+    const payload = new FormData();
+    Object.entries(fields).forEach(([key, value]) => payload.append(key, value));
+    const image1 = document.getElementById('reg_image1').files[0];
+    const image2 = document.getElementById('reg_image2').files[0];
+    if (image1) payload.append('image1', image1);
+    if (image2) payload.append('image2', image2);
+
+    BLog.info('Registration form submitted', { name: fields.full_name, type: fields.trade_type });
 
     try {
       const res = await fetch(`${BASTEL_CONFIG.API_BASE}/register`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: payload,
       });
       const data = await res.json();
 
