@@ -38,7 +38,9 @@ router.post('/', async (req, res) => {
   }
 
   logger.info('Contact message saved', { id: data.id });
-  sendContactEmails(data); // fire-and-forget — a failed email shouldn't fail the submission
+  // Awaited (not fire-and-forget): on Vercel the function can freeze right after
+  // the response is sent, silently dropping any email still in flight.
+  await sendContactEmails(data);
   res.status(201).json({ success: true, message: 'Message received.', id: data.id });
 });
 

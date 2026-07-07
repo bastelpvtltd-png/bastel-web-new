@@ -16,13 +16,13 @@
   // ── VALIDATION ────────────────────────────────────────────
   const NAME_RX    = /^[A-Za-zÀ-ſ\s.'-]{2,60}$/;
   const PHONE_RX   = /^\+?[\d\s-]{7,17}$/;
-  const TIN_VAT_RX = /^[A-Za-z]{2,6}-?\d{2,8}(\/\d{1,8})?$/;
+  const TIN_VAT_RX = /^\d{8,9}-\d{3,4}$/;
   const BR_RX      = /^[A-Za-z]{2,4}\s?\d{5,10}$/;
 
   function validateFields(fields) {
     if (!NAME_RX.test(fields.full_name.trim())) return 'Please enter a valid full name (letters only).';
     if (!PHONE_RX.test(fields.phone.trim())) return 'Please enter a valid phone number, e.g. +94 77 000 0000.';
-    if (fields.tin_vat && !TIN_VAT_RX.test(fields.tin_vat.trim())) return 'Invalid TIN/VAT number — expected format e.g. TIN-2525/7000.';
+    if (fields.tin_vat && !TIN_VAT_RX.test(fields.tin_vat.trim())) return 'Invalid TIN/VAT number — expected format e.g. 242788508-2525.';
     if (fields.br_number && !BR_RX.test(fields.br_number.trim())) return 'Invalid BR number — expected format e.g. PV 12345678.';
     return null;
   }

@@ -13,7 +13,7 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 
 
 const NAME_RX     = /^[A-Za-zÀ-ſ\s.'-]{2,60}$/;
 const PHONE_RX    = /^\+?[\d\s-]{7,17}$/;
-const TIN_VAT_RX  = /^[A-Za-z]{2,6}-?\d{2,8}(\/\d{1,8})?$/;
+const TIN_VAT_RX  = /^\d{8,9}-\d{3,4}$/;
 const BR_RX       = /^[A-Za-z]{2,4}\s?\d{5,10}$/;
 
 // Compresses + uploads one registration image slot to Drive; returns its link, or null if not provided.
@@ -48,7 +48,7 @@ router.post('/', upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2
     return res.status(400).json({ success: false, message: 'Invalid phone number — e.g. +94 77 000 0000.' });
   }
   if (tin_vat && !TIN_VAT_RX.test(tin_vat.trim())) {
-    return res.status(400).json({ success: false, message: 'Invalid TIN/VAT number — expected format e.g. TIN-2525/7000.' });
+    return res.status(400).json({ success: false, message: 'Invalid TIN/VAT number — expected format e.g. 242788508-2525.' });
   }
   if (br_number && !BR_RX.test(br_number.trim())) {
     return res.status(400).json({ success: false, message: 'Invalid BR number — expected format e.g. PV 12345678.' });
@@ -104,7 +104,9 @@ router.post('/', upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2
   }
 
   logger.info('Registration saved', { id: data.id, email });
-  sendRegistrationEmail(data); // fire-and-forget — a failed email shouldn't fail the registration
+  // Awaited (not fire-and-forget): on Vercel the function can freeze right after
+  // the response is sent, silently dropping any email still in flight.
+  await sendRegistrationEmail(data);
   res.status(201).json({ success: true, message: 'Registration submitted successfully.', id: data.id });
 });
 
