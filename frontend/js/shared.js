@@ -261,4 +261,29 @@ document.querySelectorAll('.value-header').forEach(header => {
   });
 });
 
+// ── LAZY BACKGROUND VIDEOS ────────────────────────────────────
+// Only starts downloading/playing videos marked [data-lazy-video] once they
+// scroll near the viewport, instead of every background video loading and
+// autoplaying at once on page load.
+(function lazyVideos() {
+  const videos = document.querySelectorAll('video[data-lazy-video]');
+  if (!videos.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    videos.forEach(v => v.play());
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const video = entry.target;
+      video.play().catch(() => {});
+      observer.unobserve(video);
+    });
+  }, { rootMargin: '200px' });
+
+  videos.forEach(v => observer.observe(v));
+})();
+
 BLog.info('Shared JS initialized');

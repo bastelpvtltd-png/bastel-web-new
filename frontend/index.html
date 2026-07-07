@@ -62,7 +62,7 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-video-wrap">
-    <video class="hero-video" autoplay muted loop playsinline>
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
       <source src="assets/video2.mp4" type="video/mp4" />
     </video>
     <div class="hero-overlay"></div>
@@ -182,7 +182,7 @@
 <section class="about" id="about">
   <div class="about-visual">
     <div class="about-video-wrap">
-      <video autoplay muted loop playsinline class="about-video">
+      <video muted loop playsinline preload="none" class="about-video" data-lazy-video>
         <source src="assets/video1.mp4" type="video/mp4" />
       </video>
       <div class="about-video-overlay"></div>
@@ -216,7 +216,7 @@
 <!-- WHY US -->
 <section class="why">
   <div class="why-bg-video">
-    <video autoplay muted loop playsinline><source src="assets/video3.mp4" /></video>
+    <video muted loop playsinline preload="none" data-lazy-video><source src="assets/video3.mp4" type="video/mp4" /></video>
     <div class="why-overlay"></div>
   </div>
   <div class="container why-content">
