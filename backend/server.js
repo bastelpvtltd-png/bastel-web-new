@@ -1,5 +1,6 @@
 // server.js — Bastel Pvt Ltd Backend
 require('dotenv').config();
+const path        = require('path');
 const express     = require('express');
 const cors        = require('cors');
 const helmet      = require('helmet');
@@ -32,7 +33,7 @@ app.use(cors({
     }
   },
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type', 'x-admin-key'],
 }));
 
 // Global rate limit — 100 req / 15 min per IP
@@ -48,6 +49,11 @@ app.use(rateLimit({
 app.use('/api/register', require('./routes/register'));
 app.use('/api/notify',   require('./routes/notify'));
 app.use('/api/contact',  require('./routes/contact'));
+
+// Local-only admin dashboard. Lives outside frontend/ and isn't routed to on
+// Vercel (vercel.json only sends /api/* and /health here), so it's only
+// reachable when running this server directly, e.g. `node server.js`.
+app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 // Health check (Render uses this)
 app.get('/health', (_req, res) => res.json({ status: 'ok', ts: new Date().toISOString() }));

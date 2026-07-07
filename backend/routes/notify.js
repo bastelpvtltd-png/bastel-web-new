@@ -3,6 +3,7 @@ const express  = require('express');
 const router   = express.Router();
 const supabase = require('../config/supabase');
 const logger   = require('../middleware/logger');
+const adminAuth = require('../middleware/adminAuth');
 
 // POST /api/notify
 router.post('/', async (req, res) => {
@@ -42,7 +43,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET /api/notify — admin list
-router.get('/', async (req, res) => {
+router.get('/', adminAuth, async (req, res) => {
   const { data, error } = await supabase
     .from('notify_list')
     .select('*')

@@ -4,11 +4,17 @@ const multer  = require('multer');
 const router  = express.Router();
 const supabase = require('../config/supabase');
 const logger   = require('../middleware/logger');
+const adminAuth = require('../middleware/adminAuth');
 const { compressImage } = require('../config/imageCompress');
 const { uploadImage } = require('../config/googleDrive');
 const { sendRegistrationEmail } = require('../config/mailer');
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
+
+const NAME_RX     = /^[A-Za-zÀ-ſ\s.'-]{2,60}$/;
+const PHONE_RX    = /^\+?[\d\s-]{7,17}$/;
+const TIN_VAT_RX  = /^[A-Za-z]{2,6}-?\d{2,8}(\/\d{1,8})?$/;
+const BR_RX       = /^[A-Za-z]{2,4}\s?\d{5,10}$/;
 
 // Compresses + uploads one registration image slot to Drive; returns its link, or null if not provided.
 async function processImage(file, fullName, slot) {
@@ -34,6 +40,18 @@ router.post('/', upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2
   const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRx.test(email)) {
     return res.status(400).json({ success: false, message: 'Invalid email address.' });
+  }
+  if (!NAME_RX.test(full_name.trim())) {
+    return res.status(400).json({ success: false, message: 'Invalid name — use letters only (2-60 characters).' });
+  }
+  if (!PHONE_RX.test(phone.trim())) {
+    return res.status(400).json({ success: false, message: 'Invalid phone number — e.g. +94 77 000 0000.' });
+  }
+  if (tin_vat && !TIN_VAT_RX.test(tin_vat.trim())) {
+    return res.status(400).json({ success: false, message: 'Invalid TIN/VAT number — expected format e.g. TIN-2525/7000.' });
+  }
+  if (br_number && !BR_RX.test(br_number.trim())) {
+    return res.status(400).json({ success: false, message: 'Invalid BR number — expected format e.g. PV 12345678.' });
   }
 
   logger.info('New registration attempt', { email, trade_type, country });
@@ -90,8 +108,8 @@ router.post('/', upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2
   res.status(201).json({ success: true, message: 'Registration submitted successfully.', id: data.id });
 });
 
-// GET /api/register — admin: list all (add auth middleware in production)
-router.get('/', async (req, res) => {
+// GET /api/register — admin: list all
+router.get('/', adminAuth, async (req, res) => {
   const { status, type } = req.query;
   let query = supabase.from('registrations').select('*').order('created_at', { ascending: false });
   if (status) query = query.eq('status', status);

@@ -13,6 +13,20 @@
     });
   });
 
+  // ── VALIDATION ────────────────────────────────────────────
+  const NAME_RX    = /^[A-Za-zÀ-ſ\s.'-]{2,60}$/;
+  const PHONE_RX   = /^\+?[\d\s-]{7,17}$/;
+  const TIN_VAT_RX = /^[A-Za-z]{2,6}-?\d{2,8}(\/\d{1,8})?$/;
+  const BR_RX      = /^[A-Za-z]{2,4}\s?\d{5,10}$/;
+
+  function validateFields(fields) {
+    if (!NAME_RX.test(fields.full_name.trim())) return 'Please enter a valid full name (letters only).';
+    if (!PHONE_RX.test(fields.phone.trim())) return 'Please enter a valid phone number, e.g. +94 77 000 0000.';
+    if (fields.tin_vat && !TIN_VAT_RX.test(fields.tin_vat.trim())) return 'Invalid TIN/VAT number — expected format e.g. TIN-2525/7000.';
+    if (fields.br_number && !BR_RX.test(fields.br_number.trim())) return 'Invalid BR number — expected format e.g. PV 12345678.';
+    return null;
+  }
+
   // ── FORM SUBMISSION ──────────────────────────────────────
   const form = document.getElementById('registrationForm');
   if (!form) return;
@@ -22,7 +36,6 @@
     const btn = form.querySelector('.reg-submit');
     const alertEl = document.getElementById('regAlert');
     const orig = btn.textContent;
-    btn.textContent = 'Submitting...'; btn.disabled = true;
 
     const fields = {
       trade_type:    document.getElementById('reg_type').value,
@@ -41,6 +54,15 @@
       requirements:  form.querySelector('[name=requirements]')?.value || '',
     };
 
+    const validationError = validateFields(fields);
+    if (validationError) {
+      alertEl.innerHTML = `<div class="alert alert-error">⚠ ${validationError}</div>`;
+      BLog.warn('Registration validation failed', { error: validationError });
+      return;
+    }
+
+    btn.textContent = 'Submitting...'; btn.disabled = true;
+
     const payload = new FormData();
     Object.entries(fields).forEach(([key, value]) => payload.append(key, value));
     const image1 = document.getElementById('reg_image1').files[0];
@@ -58,7 +80,7 @@
       const data = await res.json();
 
       if (res.ok) {
-        alertEl.innerHTML = `<div class="alert alert-success">✓ Registration submitted successfully! We'll contact you at <strong>${payload.email}</strong> within 2 business days.</div>`;
+        alertEl.innerHTML = `<div class="alert alert-success">✓ Registration submitted successfully! We'll contact you at <strong>${fields.email}</strong> within 2 business days.</div>`;
         btn.textContent = 'Registration Submitted ✓';
         btn.style.background = '#1a7a4a';
         form.reset();
