@@ -58,6 +58,11 @@ app.use('/admin', express.static(path.join(__dirname, 'admin')));
 // Health check (Render uses this)
 app.get('/health', (_req, res) => res.json({ status: 'ok', ts: new Date().toISOString() }));
 
+// Serves the site itself when running locally (`node server.js`). On Vercel,
+// vercel.json routes non-api paths straight to frontend/** as a separate
+// static deployment, so this middleware is never reached there.
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
+
 // 404
 app.use((_req, res) => res.status(404).json({ success: false, message: 'Endpoint not found.' }));
 
