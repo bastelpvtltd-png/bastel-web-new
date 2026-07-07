@@ -62,6 +62,10 @@ app.use((err, _req, res, _next) => {
 });
 
 // ── START ─────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  logger.info(`Bastel backend running on port ${PORT}`, { env: process.env.NODE_ENV });
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    logger.info(`Bastel backend running on port ${PORT}`, { env: process.env.NODE_ENV });
+  });
+}
+
+module.exports = app;
