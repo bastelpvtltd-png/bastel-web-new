@@ -13,7 +13,22 @@ const BASTEL_CONFIG = {
   EMAILJS_REPLY_TPL: 'template_d6set95',
   COOKIE_KEY: 'bastel_cookie_consent',
   LOG_KEY: 'bastel_logs',
+  THEME_KEY: 'bastel_theme',
 };
+
+// ── THEME TOGGLE ──────────────────────────────────────────────
+(function initTheme() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+  const setIcon = (theme) => { btn.textContent = theme === 'light' ? '🌙' : '☀️'; };
+  setIcon(document.documentElement.getAttribute('data-theme') || 'dark');
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(BASTEL_CONFIG.THEME_KEY, next);
+    setIcon(next);
+  });
+})();
 
 // ── LOGGER ──────────────────────────────────────────────────
 const BLog = {
