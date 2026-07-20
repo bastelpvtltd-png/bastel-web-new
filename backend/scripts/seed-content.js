@@ -31,17 +31,26 @@ const seenIn = {}; // key -> [files]
 
 for (const file of files) {
   const html = fs.readFileSync(file, 'utf8');
-  const re = /data-cms="([a-z0-9_]+)"/g;
+  const re = /data-cms(-video)?="([a-z0-9_]+)"/g;
   let m;
   while ((m = re.exec(html))) {
-    const key = m[1];
+    const isVideo = !!m[1];
+    const key = m[2];
     seenIn[key] = seenIn[key] || [];
     seenIn[key].push(path.relative(FRONTEND, file));
     if (values[key] !== undefined) continue; // already captured a value
-    // find the end of the opening tag this attribute lives in, then read
-    // up to the next '<' as the leaf text content.
     const tagEnd = html.indexOf('>', m.index);
     if (tagEnd === -1) continue;
+    if (isVideo) {
+      // default value is this tag's own src="..." attribute, not leaf text
+      const tagStart = html.lastIndexOf('<', m.index);
+      const tag = html.slice(tagStart, tagEnd + 1);
+      const srcMatch = tag.match(/\ssrc="([^"]*)"/);
+      values[key] = srcMatch ? decodeEntities(srcMatch[1]) : '';
+      continue;
+    }
+    // find the end of the opening tag this attribute lives in, then read
+    // up to the next '<' as the leaf text content.
     const nextLt = html.indexOf('<', tagEnd + 1);
     if (nextLt === -1) continue;
     const text = decodeEntities(html.slice(tagEnd + 1, nextLt).trim());

@@ -37,7 +37,8 @@ const BASTEL_CONFIG = {
 (function loadSiteContent() {
   const textEls = document.querySelectorAll('[data-cms]');
   const hrefEls = document.querySelectorAll('[data-cms-href]');
-  if (!textEls.length && !hrefEls.length) return;
+  const videoEls = document.querySelectorAll('[data-cms-video]');
+  if (!textEls.length && !hrefEls.length && !videoEls.length) return;
 
   fetch(`${BASTEL_CONFIG.API_BASE}/content`)
     .then(res => res.json())
@@ -50,6 +51,15 @@ const BASTEL_CONFIG = {
       hrefEls.forEach(el => {
         const key = el.getAttribute('data-cms-href');
         if (data[key] != null) el.setAttribute('href', el.getAttribute('href').replace(/^(mailto:|tel:).*/, `$1${data[key]}`));
+      });
+      videoEls.forEach(source => {
+        const key = source.getAttribute('data-cms-video');
+        if (data[key] == null || data[key] === source.getAttribute('src')) return;
+        source.setAttribute('src', data[key]);
+        const video = source.closest('video');
+        if (!video) return;
+        video.load();
+        if (!video.hasAttribute('data-lazy-video')) video.play().catch(() => {});
       });
     })
     .catch(err => BLog?.error?.('Site content load failed', { error: err.message }));
