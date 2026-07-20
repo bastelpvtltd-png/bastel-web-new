@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bastel Admin — Registrations &amp; Quotes</title>
+<title>Bastel Admin</title>
 <style>
   :root {
     --green: #1a7a4a; --cyan: #22d4f0; --cyan-light: #5ee2f5;
@@ -22,7 +22,7 @@
   #lockError { color: #ff8080; font-size: .85rem; min-height: 1.2em; }
 
   #dashboard { display: none; }
-  .tabs { display: flex; gap: .6rem; margin-bottom: 1.2rem; }
+  .tabs { display: flex; gap: .6rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
   .tab-btn { padding: .55rem 1.2rem; border-radius: 6px; border: 1px solid var(--border); background: var(--dark-3); color: var(--text-muted); cursor: pointer; font-size: .85rem; }
   .tab-btn.active { background: var(--cyan); color: var(--dark); font-weight: 600; border-color: var(--cyan); }
   .panel { display: none; }
@@ -40,27 +40,52 @@
   .badge { padding: .15rem .5rem; border-radius: 4px; font-size: .72rem; font-weight: 600; }
   .badge-pending { background: rgba(34,212,240,.15); color: var(--cyan-light); }
   .badge-new { background: rgba(34,212,240,.15); color: var(--cyan-light); }
-  .badge-approved, .badge-replied { background: rgba(26,122,74,.25); color: #6fd99a; }
-  .badge-rejected { background: rgba(255,90,90,.15); color: #ff8080; }
+  .badge-approved, .badge-replied, .badge-active { background: rgba(26,122,74,.25); color: #6fd99a; }
+  .badge-rejected, .badge-inactive { background: rgba(255,90,90,.15); color: #ff8080; }
   .table-wrap { max-height: 70vh; overflow: auto; }
+
+  /* Content editor form */
+  .content-form { display: flex; flex-direction: column; gap: 1.2rem; max-width: 720px; }
+  .field label { display: block; font-size: .78rem; color: var(--cyan-light); margin-bottom: .35rem; font-weight: 600; }
+  .field textarea, .field input[type=text] {
+    width: 100%; background: var(--dark-2); border: 1px solid var(--border); border-radius: 6px;
+    padding: .7rem .9rem; color: var(--text); font-size: .88rem; font-family: inherit; resize: vertical;
+  }
+  .save-btn { padding: .7rem 1.6rem; border-radius: 6px; border: none; background: var(--cyan); color: var(--dark); font-weight: 600; cursor: pointer; align-self: flex-start; }
+  .save-status { font-size: .82rem; color: var(--text-muted); }
+
+  /* Marketplace item form */
+  .item-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; background: var(--dark-2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem; }
+  .item-form .field.full { grid-column: 1 / -1; }
+  .item-form input, .item-form select, .item-form textarea {
+    width: 100%; background: var(--dark-3); border: 1px solid var(--border); border-radius: 6px;
+    padding: .6rem .8rem; color: var(--text); font-size: .85rem; font-family: inherit;
+  }
+  .item-form-actions { grid-column: 1 / -1; display: flex; gap: .6rem; }
+  .btn-secondary { padding: .55rem 1.2rem; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; font-size: .82rem; }
+  .row-actions button { border: none; background: none; cursor: pointer; font-size: .78rem; padding: .2rem .5rem; }
+  .row-edit { color: var(--cyan-light); }
+  .row-delete { color: #ff8080; }
 </style>
 </head>
 <body>
 
 <div id="lockScreen">
   <h2 style="margin:0 0 .5rem;">Bastel Admin</h2>
-  <p style="color:var(--text-muted);font-size:.85rem;margin:0;">Enter the admin key to view saved registrations and quote requests. This page only works when the backend is running locally.</p>
+  <p style="color:var(--text-muted);font-size:.85rem;margin:0;">Enter the admin key to manage registrations, quotes, site content, and the marketplace.</p>
   <input type="password" id="adminKeyInput" placeholder="Admin key" />
   <button id="unlockBtn">Unlock</button>
   <div id="lockError"></div>
 </div>
 
 <div id="dashboard">
-  <header><h1>BASTEL — Registrations &amp; Quotes (local admin view)</h1></header>
+  <header><h1>BASTEL — Admin Panel</h1></header>
   <div class="wrap">
     <div class="tabs">
       <button class="tab-btn active" data-panel="regPanel">Registrations</button>
       <button class="tab-btn" data-panel="quotePanel">Quotes / Contact Messages</button>
+      <button class="tab-btn" data-panel="contentPanel">Site Content</button>
+      <button class="tab-btn" data-panel="marketPanel">Marketplace</button>
     </div>
 
     <div id="regPanel" class="panel active">
@@ -82,6 +107,41 @@
         <tbody id="quoteBody"></tbody>
       </table></div>
     </div>
+
+    <div id="contentPanel" class="panel">
+      <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem;max-width:720px;">
+        Edit text shown on the live website — contact details, mission/vision, and the Director's Message. Changes apply immediately after saving.
+      </p>
+      <div class="content-form" id="contentForm"></div>
+      <button class="save-btn" id="saveContentBtn" style="margin-top:1.2rem;">Save All Changes</button>
+      <p class="save-status" id="contentStatus"></p>
+    </div>
+
+    <div id="marketPanel" class="panel">
+      <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1rem;max-width:720px;">
+        Manage the preview listings shown on the Marketplace "Coming Soon" page.
+      </p>
+      <form class="item-form" id="itemForm">
+        <input type="hidden" id="item_id" />
+        <div class="field"><label>Title *</label><input type="text" id="item_title" required /></div>
+        <div class="field"><label>Price</label><input type="text" id="item_price" placeholder="e.g. Contact for price" /></div>
+        <div class="field"><label>Category</label><input type="text" id="item_category" placeholder="e.g. Agricultural Products" /></div>
+        <div class="field"><label>Status</label>
+          <select id="item_status"><option value="active">Active (visible)</option><option value="inactive">Inactive (hidden)</option></select>
+        </div>
+        <div class="field full"><label>Image URL</label><input type="text" id="item_image" placeholder="https://..." /></div>
+        <div class="field full"><label>Description</label><textarea id="item_description" rows="2"></textarea></div>
+        <div class="item-form-actions">
+          <button type="submit" class="save-btn">Save Listing</button>
+          <button type="button" class="btn-secondary" id="itemCancelBtn">Clear / New</button>
+        </div>
+      </form>
+      <div class="meta-row"><span id="marketCount">Loading…</span><button class="refresh" data-reload="marketplace">Refresh</button></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Title</th><th>Category</th><th>Price</th><th>Status</th><th>Created</th><th></th></tr></thead>
+        <tbody id="marketBody"></tbody>
+      </table></div>
+    </div>
   </div>
 </div>
 
@@ -93,69 +153,148 @@
   const lockScreen = document.getElementById('lockScreen');
   const dashboard  = document.getElementById('dashboard');
   const lockError  = document.getElementById('lockError');
+  let adminKey = null;
 
   function esc(str) {
     return String(str ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
   }
+  function fmtDate(iso) { return iso ? new Date(iso).toLocaleString() : '—'; }
+  function badge(status) { return `<span class="badge badge-${esc(status)}">${esc(status)}</span>`; }
 
-  function fmtDate(iso) {
-    if (!iso) return '—';
-    return new Date(iso).toLocaleString();
-  }
-
-  async function apiGet(path, key) {
-    const res = await fetch(`${API_BASE}${path}`, { headers: { 'x-admin-key': key } });
+  async function apiFetch(path, key, opts = {}) {
+    const res = await fetch(`${API_BASE}${path}`, {
+      ...opts,
+      headers: { 'x-admin-key': key, ...(opts.body ? { 'Content-Type': 'application/json' } : {}), ...(opts.headers || {}) },
+    });
     if (res.status === 401) throw new Error('unauthorized');
-    if (!res.ok) throw new Error('request failed');
+    if (!res.ok) throw new Error((await res.json().catch(() => ({}))).message || 'request failed');
     return res.json();
   }
 
-  function badge(status) {
-    return `<span class="badge badge-${esc(status)}">${esc(status)}</span>`;
-  }
-
+  // ── REGISTRATIONS ──────────────────────────────────────────
   function renderRegistrations(rows) {
     document.getElementById('regCount').textContent = `${rows.length} registration${rows.length === 1 ? '' : 's'}`;
     document.getElementById('regBody').innerHTML = rows.length ? rows.map(r => `
       <tr>
-        <td>${fmtDate(r.created_at)}</td>
-        <td>${esc(r.full_name)}</td>
-        <td>${esc(r.company_name) || '—'}</td>
-        <td>${esc(r.trade_type)}</td>
-        <td>${esc(r.email)}</td>
-        <td>${esc(r.phone)}</td>
-        <td>${esc(r.country)}</td>
-        <td>${esc(r.tin_vat) || '—'}</td>
-        <td>${esc(r.br_number) || '—'}</td>
-        <td>${esc(r.trade_category)}</td>
+        <td>${fmtDate(r.created_at)}</td><td>${esc(r.full_name)}</td><td>${esc(r.company_name) || '—'}</td>
+        <td>${esc(r.trade_type)}</td><td>${esc(r.email)}</td><td>${esc(r.phone)}</td><td>${esc(r.country)}</td>
+        <td>${esc(r.tin_vat) || '—'}</td><td>${esc(r.br_number) || '—'}</td><td>${esc(r.trade_category)}</td>
         <td>${esc(r.commodity) || '—'}</td>
         <td>${[r.image1_link && `<a href="${r.image1_link}" target="_blank" rel="noopener">Img 1</a>`, r.image2_link && `<a href="${r.image2_link}" target="_blank" rel="noopener">Img 2</a>`].filter(Boolean).join(' · ') || '—'}</td>
         <td>${badge(r.status)}</td>
       </tr>`).join('') : `<tr><td colspan="13" class="empty">No registrations yet.</td></tr>`;
   }
-
   function renderQuotes(rows) {
     document.getElementById('quoteCount').textContent = `${rows.length} message${rows.length === 1 ? '' : 's'}`;
     document.getElementById('quoteBody').innerHTML = rows.length ? rows.map(r => `
       <tr>
-        <td>${fmtDate(r.created_at)}</td>
-        <td>${esc(r.name)}</td>
-        <td>${esc(r.email)}</td>
-        <td>${esc(r.service)}</td>
-        <td style="max-width:340px;white-space:pre-wrap;">${esc(r.message)}</td>
-        <td>${badge(r.status)}</td>
+        <td>${fmtDate(r.created_at)}</td><td>${esc(r.name)}</td><td>${esc(r.email)}</td><td>${esc(r.service)}</td>
+        <td style="max-width:340px;white-space:pre-wrap;">${esc(r.message)}</td><td>${badge(r.status)}</td>
       </tr>`).join('') : `<tr><td colspan="6" class="empty">No quote/contact messages yet.</td></tr>`;
   }
+  async function loadRegistrations() { renderRegistrations((await apiFetch('/register', adminKey)).data); }
+  async function loadQuotes() { renderQuotes((await apiFetch('/contact', adminKey)).data); }
 
-  async function loadRegistrations(key) { renderRegistrations((await apiGet('/register', key)).data); }
-  async function loadQuotes(key) { renderQuotes((await apiGet('/contact', key)).data); }
-
-  async function loadAll(key) {
-    await Promise.all([loadRegistrations(key), loadQuotes(key)]);
+  // ── SITE CONTENT ────────────────────────────────────────────
+  const CONTENT_FIELDS = [
+    { key: 'contact_phone', label: 'Contact Phone (display text)' },
+    { key: 'contact_phone_tel', label: 'Contact Phone (tel: link value, e.g. +94710940466)' },
+    { key: 'contact_email', label: 'Contact Email' },
+    { key: 'contact_address', label: 'Contact Address' },
+    { key: 'director_name', label: "Director's Name/Title label (e.g. \"Director\")" },
+    { key: 'director_title', label: 'Director subtitle (e.g. "Bastel Pvt Ltd")' },
+    { key: 'director_message', label: "Director's Message (blank line = new paragraph)", textarea: true, rows: 8 },
+    { key: 'mission_text', label: 'Mission statement' },
+    { key: 'vision_text', label: 'Vision statement' },
+  ];
+  async function loadContent() {
+    const { data } = await apiFetch('/content', adminKey);
+    const form = document.getElementById('contentForm');
+    form.innerHTML = CONTENT_FIELDS.map(f => `
+      <div class="field">
+        <label for="cms_${f.key}">${esc(f.label)}</label>
+        ${f.textarea
+          ? `<textarea id="cms_${f.key}" rows="${f.rows || 3}">${esc(data[f.key] || '')}</textarea>`
+          : `<input type="text" id="cms_${f.key}" value="${esc(data[f.key] || '')}" />`}
+      </div>`).join('');
+  }
+  async function saveContent() {
+    const status = document.getElementById('contentStatus');
+    status.textContent = 'Saving…';
+    const payload = {};
+    CONTENT_FIELDS.forEach(f => { payload[f.key] = document.getElementById(`cms_${f.key}`).value; });
+    try {
+      await apiFetch('/content', adminKey, { method: 'PUT', body: JSON.stringify(payload) });
+      status.textContent = '✓ Saved — refresh the live site to see changes.';
+    } catch (err) {
+      status.textContent = `⚠ Save failed: ${err.message}`;
+    }
   }
 
+  // ── MARKETPLACE ─────────────────────────────────────────────
+  let marketItems = [];
+  function renderMarket() {
+    document.getElementById('marketCount').textContent = `${marketItems.length} listing${marketItems.length === 1 ? '' : 's'}`;
+    document.getElementById('marketBody').innerHTML = marketItems.length ? marketItems.map(i => `
+      <tr>
+        <td>${esc(i.title)}</td><td>${esc(i.category) || '—'}</td><td>${esc(i.price) || '—'}</td>
+        <td>${badge(i.status)}</td><td>${fmtDate(i.created_at)}</td>
+        <td class="row-actions">
+          <button class="row-edit" data-edit="${i.id}">Edit</button>
+          <button class="row-delete" data-delete="${i.id}">Delete</button>
+        </td>
+      </tr>`).join('') : `<tr><td colspan="6" class="empty">No listings yet — add one above.</td></tr>`;
+
+    document.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => editItem(btn.dataset.edit)));
+    document.querySelectorAll('[data-delete]').forEach(btn => btn.addEventListener('click', () => deleteItem(btn.dataset.delete)));
+  }
+  async function loadMarket() {
+    marketItems = (await apiFetch('/marketplace/all', adminKey)).data;
+    renderMarket();
+  }
+  function editItem(id) {
+    const item = marketItems.find(i => i.id === id);
+    if (!item) return;
+    document.getElementById('item_id').value = item.id;
+    document.getElementById('item_title').value = item.title || '';
+    document.getElementById('item_price').value = item.price || '';
+    document.getElementById('item_category').value = item.category || '';
+    document.getElementById('item_status').value = item.status || 'active';
+    document.getElementById('item_image').value = item.image_link || '';
+    document.getElementById('item_description').value = item.description || '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function resetItemForm() { document.getElementById('itemForm').reset(); document.getElementById('item_id').value = ''; }
+  async function deleteItem(id) {
+    if (!confirm('Delete this listing?')) return;
+    await apiFetch(`/marketplace/${id}`, adminKey, { method: 'DELETE' });
+    await loadMarket();
+  }
+  document.getElementById('itemForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('item_id').value;
+    const payload = {
+      title: document.getElementById('item_title').value,
+      price: document.getElementById('item_price').value,
+      category: document.getElementById('item_category').value,
+      status: document.getElementById('item_status').value,
+      image_link: document.getElementById('item_image').value,
+      description: document.getElementById('item_description').value,
+    };
+    await apiFetch(id ? `/marketplace/${id}` : '/marketplace', adminKey, { method: id ? 'PUT' : 'POST', body: JSON.stringify(payload) });
+    resetItemForm();
+    await loadMarket();
+  });
+  document.getElementById('itemCancelBtn').addEventListener('click', resetItemForm);
+  document.getElementById('saveContentBtn').addEventListener('click', saveContent);
+
+  // ── UNLOCK / TABS / REFRESH ──────────────────────────────────
+  async function loadAll() {
+    await Promise.all([loadRegistrations(), loadQuotes(), loadContent(), loadMarket()]);
+  }
   function unlock(key) {
-    loadAll(key).then(() => {
+    adminKey = key;
+    loadAll().then(() => {
       localStorage.setItem(KEY_STORAGE, key);
       lockScreen.style.display = 'none';
       dashboard.style.display = 'block';
@@ -166,8 +305,7 @@
 
   document.getElementById('unlockBtn').addEventListener('click', () => {
     const key = document.getElementById('adminKeyInput').value.trim();
-    if (!key) return;
-    unlock(key);
+    if (key) unlock(key);
   });
   document.getElementById('adminKeyInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') document.getElementById('unlockBtn').click();
@@ -184,10 +322,8 @@
 
   document.querySelectorAll('[data-reload]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const key = localStorage.getItem(KEY_STORAGE);
-      if (!key) return;
-      if (btn.dataset.reload === 'registrations') loadRegistrations(key);
-      else loadQuotes(key);
+      if (!adminKey) return;
+      ({ registrations: loadRegistrations, contact: loadQuotes, marketplace: loadMarket }[btn.dataset.reload])();
     });
   });
 

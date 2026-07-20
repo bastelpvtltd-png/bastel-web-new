@@ -30,6 +30,31 @@ const BASTEL_CONFIG = {
   });
 })();
 
+// ── SITE CONTENT (admin-editable via /admin) ───────────────────
+// Populates elements marked [data-cms="key"] (text) or [data-cms-href="key"]
+// (href/mailto/tel) with the live values from /api/content. Elements keep
+// their static fallback text until/unless this fetch succeeds.
+(function loadSiteContent() {
+  const textEls = document.querySelectorAll('[data-cms]');
+  const hrefEls = document.querySelectorAll('[data-cms-href]');
+  if (!textEls.length && !hrefEls.length) return;
+
+  fetch(`${BASTEL_CONFIG.API_BASE}/content`)
+    .then(res => res.json())
+    .then(({ success, data }) => {
+      if (!success || !data) return;
+      textEls.forEach(el => {
+        const key = el.getAttribute('data-cms');
+        if (data[key] != null) el.textContent = data[key];
+      });
+      hrefEls.forEach(el => {
+        const key = el.getAttribute('data-cms-href');
+        if (data[key] != null) el.setAttribute('href', el.getAttribute('href').replace(/^(mailto:|tel:).*/, `$1${data[key]}`));
+      });
+    })
+    .catch(err => BLog?.error?.('Site content load failed', { error: err.message }));
+})();
+
 // ── LOGGER ──────────────────────────────────────────────────
 const BLog = {
   _write(level, msg, data) {

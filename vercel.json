@@ -7,6 +7,7 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "backend/server.js" },
     { "src": "/health", "dest": "backend/server.js" },
+    { "src": "/admin(.*)", "dest": "backend/server.js" },
     { "src": "/(.*)", "dest": "frontend/$1" }
   ]
 }

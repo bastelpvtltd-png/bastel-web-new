@@ -49,10 +49,12 @@ app.use(rateLimit({
 app.use('/api/register', require('./routes/register'));
 app.use('/api/notify',   require('./routes/notify'));
 app.use('/api/contact',  require('./routes/contact'));
+app.use('/api/content',  require('./routes/content'));
+app.use('/api/marketplace', require('./routes/marketplace'));
 
-// Local-only admin dashboard. Lives outside frontend/ and isn't routed to on
-// Vercel (vercel.json only sends /api/* and /health here), so it's only
-// reachable when running this server directly, e.g. `node server.js`.
+// Admin dashboard — served at /admin both locally and on Vercel (vercel.json
+// routes /admin(.*) here). Gated client-side by the ADMIN_KEY sent as
+// x-admin-key on every data request; the HTML shell itself is not secret.
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 // Health check (Render uses this)

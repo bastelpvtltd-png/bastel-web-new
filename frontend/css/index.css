@@ -154,3 +154,17 @@
   .about-content{padding:3rem 1.5rem;}
   .services-cta{flex-direction:column;align-items:center;}
 }
+
+/* DIRECTOR'S MESSAGE */
+.director-msg { padding: 6rem 0; background: var(--dark-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.director-msg-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+.director-msg-quote-mark { font-family: var(--font-serif); font-size: 4rem; line-height: .5; color: var(--cyan); opacity: .5; margin: 0 0 1rem; }
+.director-msg-text { font-family: var(--font-serif); font-size: 1.15rem; line-height: 1.9; color: var(--text); white-space: pre-line; margin-bottom: 2rem; }
+.director-msg-sig { display: flex; flex-direction: column; gap: .2rem; }
+.director-msg-name { font-family: var(--font-display); letter-spacing: .1em; font-size: 1.1rem; color: var(--cyan); }
+.director-msg-title { font-size: .78rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-muted); }
+
+@media (max-width: 768px) {
+  .director-msg { padding: 4rem 0; }
+  .director-msg-text { font-size: 1rem; }
+}

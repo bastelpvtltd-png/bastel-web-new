@@ -1,0 +1,33 @@
+/* marketplace.css — eBay-style preview listing grid on the Marketplace coming-soon page */
+.mp-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem; margin-bottom: 3.5rem; text-align: left;
+}
+.mp-loading, .mp-empty {
+  grid-column: 1 / -1; text-align: center; color: var(--text-muted);
+  font-size: .9rem; padding: 2rem 0;
+}
+.mp-card {
+  background: var(--dark-3); border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden; transition: transform .3s, border-color .3s;
+}
+.mp-card:hover { transform: translateY(-4px); border-color: var(--cyan); }
+.mp-card-img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--dark-4); display: block;
+}
+.mp-card-img-placeholder {
+  width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+  background: var(--dark-4); font-size: 2rem; color: var(--text-muted);
+}
+.mp-card-body { padding: .9rem 1rem 1.1rem; }
+.mp-card-category {
+  font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: .35rem; display: block;
+}
+.mp-card-title { font-size: .92rem; color: var(--text); margin-bottom: .4rem; line-height: 1.4; }
+.mp-card-desc { font-size: .78rem; color: var(--text-muted); line-height: 1.5; margin-bottom: .6rem; }
+.mp-card-price { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: .04em; color: var(--green-bright); }
+
+@media (max-width: 600px) {
+  .mp-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .8rem; }
+}

@@ -26,7 +26,7 @@
 .upcoming-title {
   font-family: var(--font-display); font-size: clamp(3.5rem, 10vw, 8rem);
   line-height: .95; letter-spacing: .06em; display: flex; flex-direction: column;
-  align-items: center; margin-bottom: 1.5rem; color: #fff;
+  align-items: center; margin-bottom: 1.5rem; color: var(--text);
 }
 .upcoming-title-accent {
   background: linear-gradient(135deg, var(--green-bright), var(--cyan));
