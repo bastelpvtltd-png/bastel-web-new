@@ -54,4 +54,11 @@ router.get('/', adminAuth, async (req, res) => {
   res.json({ success: true, count: data.length, data });
 });
 
+// DELETE /api/contact/:id — admin: remove a message
+router.delete('/:id', adminAuth, async (req, res) => {
+  const { error } = await supabase.from('contact_messages').delete().eq('id', req.params.id);
+  if (error) return res.status(500).json({ success: false, message: error.message });
+  res.json({ success: true, message: 'Deleted.' });
+});
+
 module.exports = router;

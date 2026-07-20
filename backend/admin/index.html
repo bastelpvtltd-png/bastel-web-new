@@ -54,6 +54,14 @@
   .save-btn { padding: .7rem 1.6rem; border-radius: 6px; border: none; background: var(--cyan); color: var(--dark); font-weight: 600; cursor: pointer; align-self: flex-start; }
   .save-status { font-size: .82rem; color: var(--text-muted); }
 
+  /* Content groups (collapsible per-page sections) */
+  .cms-group { border: 1px solid var(--border); border-radius: 8px; margin-bottom: .8rem; background: var(--dark-2); overflow: hidden; }
+  .cms-group summary { padding: .8rem 1rem; cursor: pointer; font-weight: 600; color: var(--cyan-light); font-size: .9rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .cms-group summary::-webkit-details-marker { display: none; }
+  .cms-group summary .cms-count { color: var(--text-muted); font-weight: 400; font-size: .78rem; }
+  .cms-group .content-form { padding: 0 1rem 1.2rem; max-width: none; }
+  .field.hidden { display: none; }
+
   /* Marketplace item form */
   .item-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; background: var(--dark-2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem; }
   .item-form .field.full { grid-column: 1 / -1; }
@@ -94,7 +102,7 @@
         <thead><tr>
           <th>Date</th><th>Name</th><th>Company</th><th>Type</th><th>Email</th><th>Phone</th>
           <th>Country</th><th>TIN/VAT</th><th>BR No.</th><th>Category</th><th>Commodity</th>
-          <th>Images</th><th>Status</th>
+          <th>Images</th><th>Status</th><th></th>
         </tr></thead>
         <tbody id="regBody"></tbody>
       </table></div>
@@ -103,16 +111,17 @@
     <div id="quotePanel" class="panel">
       <div class="meta-row"><span id="quoteCount">Loading…</span><button class="refresh" data-reload="contact">Refresh</button></div>
       <div class="table-wrap"><table>
-        <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Service</th><th>Message</th><th>Status</th></tr></thead>
+        <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Service</th><th>Message</th><th>Status</th><th></th></tr></thead>
         <tbody id="quoteBody"></tbody>
       </table></div>
     </div>
 
     <div id="contentPanel" class="panel">
-      <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem;max-width:720px;">
-        Edit text shown on the live website — contact details, mission/vision, and the Director's Message. Changes apply immediately after saving.
+      <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1rem;max-width:720px;">
+        Every editable text block on the live website, grouped by page. Click a page name to expand it. Changes apply immediately after saving.
       </p>
-      <div class="content-form" id="contentForm"></div>
+      <input type="text" id="contentSearch" placeholder="Search fields…" style="width:100%;max-width:420px;margin-bottom:1rem;background:var(--dark-2);border:1px solid var(--border);border-radius:6px;padding:.6rem .9rem;color:var(--text);font-size:.85rem;" />
+      <div id="contentGroups"></div>
       <button class="save-btn" id="saveContentBtn" style="margin-top:1.2rem;">Save All Changes</button>
       <p class="save-status" id="contentStatus"></p>
     </div>
@@ -182,7 +191,9 @@
         <td>${esc(r.commodity) || '—'}</td>
         <td>${[r.image1_link && `<a href="${r.image1_link}" target="_blank" rel="noopener">Img 1</a>`, r.image2_link && `<a href="${r.image2_link}" target="_blank" rel="noopener">Img 2</a>`].filter(Boolean).join(' · ') || '—'}</td>
         <td>${badge(r.status)}</td>
-      </tr>`).join('') : `<tr><td colspan="13" class="empty">No registrations yet.</td></tr>`;
+        <td class="row-actions"><button class="row-delete" data-del-reg="${r.id}">Delete</button></td>
+      </tr>`).join('') : `<tr><td colspan="14" class="empty">No registrations yet.</td></tr>`;
+    document.querySelectorAll('[data-del-reg]').forEach(btn => btn.addEventListener('click', () => deleteRow('registrations', btn.dataset.delReg, loadRegistrations)));
   }
   function renderQuotes(rows) {
     document.getElementById('quoteCount').textContent = `${rows.length} message${rows.length === 1 ? '' : 's'}`;
@@ -190,39 +201,83 @@
       <tr>
         <td>${fmtDate(r.created_at)}</td><td>${esc(r.name)}</td><td>${esc(r.email)}</td><td>${esc(r.service)}</td>
         <td style="max-width:340px;white-space:pre-wrap;">${esc(r.message)}</td><td>${badge(r.status)}</td>
-      </tr>`).join('') : `<tr><td colspan="6" class="empty">No quote/contact messages yet.</td></tr>`;
+        <td class="row-actions"><button class="row-delete" data-del-quote="${r.id}">Delete</button></td>
+      </tr>`).join('') : `<tr><td colspan="7" class="empty">No quote/contact messages yet.</td></tr>`;
+    document.querySelectorAll('[data-del-quote]').forEach(btn => btn.addEventListener('click', () => deleteRow('contact', btn.dataset.delQuote, loadQuotes)));
+  }
+  async function deleteRow(kind, id, reload) {
+    if (!confirm('Delete this permanently?')) return;
+    const endpoint = kind === 'registrations' ? '/register' : '/contact';
+    await apiFetch(`${endpoint}/${id}`, adminKey, { method: 'DELETE' });
+    await reload();
   }
   async function loadRegistrations() { renderRegistrations((await apiFetch('/register', adminKey)).data); }
   async function loadQuotes() { renderQuotes((await apiFetch('/contact', adminKey)).data); }
 
   // ── SITE CONTENT ────────────────────────────────────────────
-  const CONTENT_FIELDS = [
-    { key: 'contact_phone', label: 'Contact Phone (display text)' },
-    { key: 'contact_phone_tel', label: 'Contact Phone (tel: link value, e.g. +94710940466)' },
-    { key: 'contact_email', label: 'Contact Email' },
-    { key: 'contact_address', label: 'Contact Address' },
-    { key: 'director_name', label: "Director's Name/Title label (e.g. \"Director\")" },
-    { key: 'director_title', label: 'Director subtitle (e.g. "Bastel Pvt Ltd")' },
-    { key: 'director_message', label: "Director's Message (blank line = new paragraph)", textarea: true, rows: 8 },
-    { key: 'mission_text', label: 'Mission statement' },
-    { key: 'vision_text', label: 'Vision statement' },
-  ];
+  // Fields are derived dynamically from whatever keys exist in site_content —
+  // no hardcoded list to keep in sync as data-cms attributes are added to pages.
+  const GROUP_NAMES = {
+    home: 'Home Page', services: 'Services Page', register: 'Register Page',
+    freight: 'Freight Process Page', marketplace: 'Marketplace Page',
+    upcoming: 'Trade Direct (Upcoming) Page', privacy: 'Privacy Policy Page',
+    terms: 'Terms of Service Page', global: 'Global — Contact, Mission/Vision, Director',
+  };
+  const GROUP_ORDER = ['home', 'services', 'register', 'freight', 'marketplace', 'upcoming', 'privacy', 'terms', 'global'];
+  const KNOWN_PREFIXES = GROUP_ORDER.filter(g => g !== 'global');
+
+  function groupOf(key) {
+    const prefix = key.split('_')[0];
+    return KNOWN_PREFIXES.includes(prefix) ? prefix : 'global';
+  }
+  function labelize(key, group) {
+    let rest = group === 'global' ? key : key.slice(group.length + 1);
+    rest = rest
+      .replace(/^svc(\d)/, 'Service $1').replace(/^feat(\d)/, 'Feature $1').replace(/^tag(\d)/, 'Tag $1')
+      .replace(/^li(\d)/, 'List Item $1').replace(/^rm(\d)/, 'Roadmap Step $1').replace(/^value(\d)/, 'Value $1')
+      .replace(/^why(\d)/, 'Why-Us Card $1').replace(/^type(\d)/, 'Type Card $1').replace(/^benefit(\d)/, 'Benefit $1')
+      .replace(/^phase(\d)/, 'Phase $1').replace(/_l1$/, ' — Line 1').replace(/_l2$/, ' — Line 2')
+      .replace(/_cta(\d?)$/, ' — Button $1').replace(/_desc$/, ' — Description').replace(/_sub$/, ' — Subtitle')
+      .replace(/_title$/, ' — Title').replace(/_text$/, ' — Text').replace(/_label$/, ' — Label')
+      .replace(/_/g, ' ').trim();
+    return rest.charAt(0).toUpperCase() + rest.slice(1);
+  }
+
+  let contentData = {};
   async function loadContent() {
     const { data } = await apiFetch('/content', adminKey);
-    const form = document.getElementById('contentForm');
-    form.innerHTML = CONTENT_FIELDS.map(f => `
-      <div class="field">
-        <label for="cms_${f.key}">${esc(f.label)}</label>
-        ${f.textarea
-          ? `<textarea id="cms_${f.key}" rows="${f.rows || 3}">${esc(data[f.key] || '')}</textarea>`
-          : `<input type="text" id="cms_${f.key}" value="${esc(data[f.key] || '')}" />`}
-      </div>`).join('');
+    contentData = data;
+    const groups = {};
+    Object.keys(data).sort().forEach(key => {
+      const g = groupOf(key);
+      (groups[g] = groups[g] || []).push(key);
+    });
+    const wrap = document.getElementById('contentGroups');
+    wrap.innerHTML = GROUP_ORDER.filter(g => groups[g]).map(g => `
+      <details class="cms-group">
+        <summary>${esc(GROUP_NAMES[g])} <span class="cms-count">${groups[g].length} fields</span></summary>
+        <div class="content-form">
+          ${groups[g].map(key => {
+            const val = data[key] || '';
+            const long = val.length > 70 || val.includes('\n');
+            return `<div class="field" data-field-key="${esc(key)}">
+              <label for="cms_${esc(key)}">${esc(labelize(key, g))}</label>
+              ${long
+                ? `<textarea id="cms_${esc(key)}" rows="4">${esc(val)}</textarea>`
+                : `<input type="text" id="cms_${esc(key)}" value="${esc(val)}" />`}
+            </div>`;
+          }).join('')}
+        </div>
+      </details>`).join('');
   }
   async function saveContent() {
     const status = document.getElementById('contentStatus');
     status.textContent = 'Saving…';
     const payload = {};
-    CONTENT_FIELDS.forEach(f => { payload[f.key] = document.getElementById(`cms_${f.key}`).value; });
+    Object.keys(contentData).forEach(key => {
+      const el = document.getElementById(`cms_${key}`);
+      if (el) payload[key] = el.value;
+    });
     try {
       await apiFetch('/content', adminKey, { method: 'PUT', body: JSON.stringify(payload) });
       status.textContent = '✓ Saved — refresh the live site to see changes.';
@@ -230,6 +285,20 @@
       status.textContent = `⚠ Save failed: ${err.message}`;
     }
   }
+  document.getElementById('contentSearch').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    document.querySelectorAll('#contentGroups .field').forEach(field => {
+      const label = field.querySelector('label').textContent.toLowerCase();
+      const key = field.dataset.fieldKey.toLowerCase();
+      const match = !q || label.includes(q) || key.includes(q);
+      field.classList.toggle('hidden', !match);
+    });
+    document.querySelectorAll('#contentGroups .cms-group').forEach(group => {
+      const anyVisible = !!group.querySelector('.field:not(.hidden)');
+      group.style.display = anyVisible ? '' : 'none';
+      if (q && anyVisible) group.open = true;
+    });
+  });
 
   // ── MARKETPLACE ─────────────────────────────────────────────
   let marketItems = [];

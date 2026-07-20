@@ -122,4 +122,11 @@ router.get('/', adminAuth, async (req, res) => {
   res.json({ success: true, count: data.length, data });
 });
 
+// DELETE /api/register/:id — admin: remove a registration
+router.delete('/:id', adminAuth, async (req, res) => {
+  const { error } = await supabase.from('registrations').delete().eq('id', req.params.id);
+  if (error) return res.status(500).json({ success: false, message: error.message });
+  res.json({ success: true, message: 'Deleted.' });
+});
+
 module.exports = router;
