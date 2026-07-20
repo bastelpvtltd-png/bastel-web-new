@@ -8,6 +8,13 @@
     { "src": "/api/(.*)", "dest": "backend/server.js" },
     { "src": "/health", "dest": "backend/server.js" },
     { "src": "/admin(.*)", "dest": "backend/server.js" },
+    { "src": "/services", "dest": "frontend/pages/services.html" },
+    { "src": "/freight-process", "dest": "frontend/pages/freight-process.html" },
+    { "src": "/register", "dest": "frontend/pages/register.html" },
+    { "src": "/upcoming", "dest": "frontend/pages/upcoming.html" },
+    { "src": "/marketplace", "dest": "frontend/pages/marketplace.html" },
+    { "src": "/privacy", "dest": "frontend/pages/privacy.html" },
+    { "src": "/terms", "dest": "frontend/pages/terms.html" },
     { "src": "/(.*)", "dest": "frontend/$1" }
   ]
 }

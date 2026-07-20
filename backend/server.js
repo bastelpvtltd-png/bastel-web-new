@@ -60,6 +60,21 @@ app.use('/admin', express.static(path.join(__dirname, 'admin')));
 // Health check (Render uses this)
 app.get('/health', (_req, res) => res.json({ status: 'ok', ts: new Date().toISOString() }));
 
+// Clean URLs for local dev (mirrors the /services etc. rewrites in vercel.json,
+// which only apply on the actual Vercel deployment, not `node server.js`).
+const CLEAN_PAGES = {
+  '/services': 'services.html',
+  '/freight-process': 'freight-process.html',
+  '/register': 'register.html',
+  '/upcoming': 'upcoming.html',
+  '/marketplace': 'marketplace.html',
+  '/privacy': 'privacy.html',
+  '/terms': 'terms.html',
+};
+Object.entries(CLEAN_PAGES).forEach(([route, file]) => {
+  app.get(route, (_req, res) => res.sendFile(path.join(__dirname, '..', 'frontend', 'pages', file)));
+});
+
 // Serves the site itself when running locally (`node server.js`). On Vercel,
 // vercel.json routes non-api paths straight to frontend/** as a separate
 // static deployment, so this middleware is never reached there.

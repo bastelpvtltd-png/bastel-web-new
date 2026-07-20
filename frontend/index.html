@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bastel Pvt Ltd — Your Global Trade Catalyst</title>
   <script>(function(){var t=localStorage.getItem('bastel_theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();</script>
-  <link rel="stylesheet" href="css/shared.css" />
-  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="/css/shared.css" />
+  <link rel="stylesheet" href="/css/index.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -20,7 +20,7 @@
 <!-- Loader -->
 <div class="loader" id="loader">
   <div class="loader-inner">
-    <img class="loader-logo" src="assets/bastel.png" alt="Bastel Logo" />
+    <img class="loader-logo" src="/assets/bastel.png" alt="Bastel Logo" />
     <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
     <p class="loader-text">Connecting Global Trade</p>
   </div>
@@ -28,22 +28,22 @@
 
 <!-- Navigation -->
 <nav class="nav" id="nav">
-  <a href="index.html" class="nav-logo">
-    <img class="nav-logo-img" src="assets/bastel.png" alt="Bastel Logo" />
+  <a href="/" class="nav-logo">
+    <img class="nav-logo-img" src="/assets/bastel.png" alt="Bastel Logo" />
     <div class="nav-logo-text-wrap">
       <span class="nav-logo-text">BASTEL</span>
       <span class="nav-logo-sub">PVT LTD</span>
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
-    <li><a href="pages/services.html" class="nav-link" data-page="services">Services</a></li>
-    <li><a href="pages/freight-process.html" class="nav-link" data-page="freight-process">Freight Process</a></li>
-    <li><a href="pages/register.html" class="nav-link" data-page="register">Register</a></li>
-    <li><a href="pages/upcoming.html" class="nav-link upcoming-btn" data-page="upcoming">
+    <li><a href="/" class="nav-link" data-page="index">Home</a></li>
+    <li><a href="/services" class="nav-link" data-page="services">Services</a></li>
+    <li><a href="/freight-process" class="nav-link" data-page="freight-process">Freight Process</a></li>
+    <li><a href="/register" class="nav-link" data-page="register">Register</a></li>
+    <li><a href="/upcoming" class="nav-link upcoming-btn" data-page="upcoming">
       Trade Direct <span class="upcoming-badge">Soon</span>
     </a></li>
-    <li><a href="pages/marketplace.html" class="nav-link upcoming-btn" data-page="marketplace">
+    <li><a href="/marketplace" class="nav-link upcoming-btn" data-page="marketplace">
       Marketplace <span class="upcoming-badge">Soon</span>
     </a></li>
     <li><a href="#contact" class="nav-link contact-btn">Contact</a></li>
@@ -55,12 +55,12 @@
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <ul>
-    <li><a href="index.html" class="mob-link">Home</a></li>
-    <li><a href="pages/services.html" class="mob-link">Services</a></li>
-    <li><a href="pages/freight-process.html" class="mob-link">Freight Process</a></li>
-    <li><a href="pages/register.html" class="mob-link">Register</a></li>
-    <li><a href="pages/upcoming.html" class="mob-link mob-upcoming">Trade Direct ✦ Soon</a></li>
-    <li><a href="pages/marketplace.html" class="mob-link mob-upcoming">Marketplace ✦ Soon</a></li>
+    <li><a href="/" class="mob-link">Home</a></li>
+    <li><a href="/services" class="mob-link">Services</a></li>
+    <li><a href="/freight-process" class="mob-link">Freight Process</a></li>
+    <li><a href="/register" class="mob-link">Register</a></li>
+    <li><a href="/upcoming" class="mob-link mob-upcoming">Trade Direct ✦ Soon</a></li>
+    <li><a href="/marketplace" class="mob-link mob-upcoming">Marketplace ✦ Soon</a></li>
     <li><a href="#contact" class="mob-link">Contact</a></li>
   </ul>
 </div>
@@ -69,7 +69,7 @@
 <section class="hero" id="home">
   <div class="hero-video-wrap">
     <video class="hero-video" autoplay muted loop playsinline preload="auto">
-      <source src="assets/video2.mp4" type="video/mp4" data-cms-video="home_hero_video_url" />
+      <source src="/assets/video2.mp4" type="video/mp4" data-cms-video="home_hero_video_url" />
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-grain"></div>
@@ -87,7 +87,7 @@
       <span data-cms="home_hero_sub_l1">End-to-end freight, customs clearance &amp; logistics solutions</span><br /><span data-cms="home_hero_sub_l2">connecting Sri Lanka to the world.</span>
     </p>
     <div class="hero-cta reveal-up" style="--delay:0.8s">
-      <a href="pages/services.html" class="btn-primary" data-cms="home_hero_cta1">Explore Services</a>
+      <a href="/services" class="btn-primary" data-cms="home_hero_cta1">Explore Services</a>
       <a href="#contact" class="btn-ghost" data-cms="home_hero_cta2">Get a Quote →</a>
     </div>
   </div>
@@ -134,7 +134,7 @@
         <h3 data-cms="home_svc1_title">Freight Handling</h3>
         <p data-cms="home_svc1_desc">Full management of air and sea freight — FCL, LCL, and consolidated cargo handled with care at every port of call.</p>
         <div class="service-tags"><span data-cms="home_svc1_tag1">Air Freight</span><span data-cms="home_svc1_tag2">Sea Freight</span><span data-cms="home_svc1_tag3">FCL/LCL</span></div>
-        <a href="pages/freight-process.html" class="service-link" data-cms="home_svc1_link">View Full Process →</a>
+        <a href="/freight-process" class="service-link" data-cms="home_svc1_link">View Full Process →</a>
       </div>
       <div class="service-card reveal-up" style="--delay:0.2s">
         <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 20H32M16 28H24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 14H40" stroke="currentColor" stroke-width="2"/></svg></div>
@@ -142,7 +142,7 @@
         <h3 data-cms="home_svc2_title">Cargo Clearing</h3>
         <p data-cms="home_svc2_desc">Licensed customs house agents ensuring swift, compliant clearance through all Sri Lankan and international ports.</p>
         <div class="service-tags"><span data-cms="home_svc2_tag1">Customs Brokerage</span><span data-cms="home_svc2_tag2">Documentation</span></div>
-        <a href="pages/services.html" class="service-link" data-cms="home_svc2_link">Learn More →</a>
+        <a href="/services" class="service-link" data-cms="home_svc2_link">Learn More →</a>
       </div>
       <div class="service-card reveal-up" style="--delay:0.3s">
         <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M4 32H38L44 20H10L4 32Z" stroke="currentColor" stroke-width="2"/><path d="M4 32L6 40H40L42 32" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="40" r="3" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="40" r="3" stroke="currentColor" stroke-width="2"/></svg></div>
@@ -150,7 +150,7 @@
         <h3 data-cms="home_svc3_title">Transport Management</h3>
         <p data-cms="home_svc3_desc">Door-to-door haulage with a reliable fleet covering island-wide delivery and port-to-warehouse transfers.</p>
         <div class="service-tags"><span data-cms="home_svc3_tag1">Haulage</span><span data-cms="home_svc3_tag2">Last Mile</span><span data-cms="home_svc3_tag3">Port Pickup</span></div>
-        <a href="pages/services.html" class="service-link" data-cms="home_svc3_link">Learn More →</a>
+        <a href="/services" class="service-link" data-cms="home_svc3_link">Learn More →</a>
       </div>
       <div class="service-card reveal-up" style="--delay:0.4s">
         <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M24 6C24 6 10 14 10 26a14 14 0 0028 0C38 14 24 6 24 6Z" stroke="currentColor" stroke-width="2"/><path d="M18 26l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -158,7 +158,7 @@
         <h3 data-cms="home_svc4_title">Fumigation Services</h3>
         <p data-cms="home_svc4_desc">Certified phytosanitary fumigation treatments ensuring your cargo meets all international biosecurity standards.</p>
         <div class="service-tags"><span data-cms="home_svc4_tag1">Phytosanitary</span><span data-cms="home_svc4_tag2">Certified</span><span data-cms="home_svc4_tag3">Compliant</span></div>
-        <a href="pages/services.html" class="service-link" data-cms="home_svc4_link">Learn More →</a>
+        <a href="/services" class="service-link" data-cms="home_svc4_link">Learn More →</a>
       </div>
       <div class="service-card reveal-up" style="--delay:0.5s">
         <div class="service-icon"><svg viewBox="0 0 48 48" fill="none"><path d="M10 6H38V42H10V6Z" stroke="currentColor" stroke-width="2"/><path d="M16 16H32M16 24H32M16 32H24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
@@ -166,20 +166,20 @@
         <h3 data-cms="home_svc5_title">Final Documentation</h3>
         <p data-cms="home_svc5_desc">Preparation and attestation of all trade documents — BL, COO, phytosanitary certs, packing lists, and more.</p>
         <div class="service-tags"><span data-cms="home_svc5_tag1">Bill of Lading</span><span data-cms="home_svc5_tag2">COO</span><span data-cms="home_svc5_tag3">Certificates</span></div>
-        <a href="pages/services.html" class="service-link" data-cms="home_svc5_link">Learn More →</a>
+        <a href="/services" class="service-link" data-cms="home_svc5_link">Learn More →</a>
       </div>
       <div class="service-card reveal-up featured-card" style="--delay:0.6s">
         <div class="service-num">06</div>
         <h3 data-cms="home_svc6_title">Import &amp; Export Trade</h3>
         <p data-cms="home_svc6_desc">Full-spectrum trading of all legal goods. We connect buyers and sellers across the globe with end-to-end transaction management.</p>
         <div class="service-tags"><span data-cms="home_svc6_tag1">Import</span><span data-cms="home_svc6_tag2">Export</span><span data-cms="home_svc6_tag3">General Merchandise</span><span data-cms="home_svc6_tag4">Global Trade</span></div>
-        <a href="pages/register.html" class="service-link" data-cms="home_svc6_link">Register as Exporter/Importer →</a>
+        <a href="/register" class="service-link" data-cms="home_svc6_link">Register as Exporter/Importer →</a>
         <div class="featured-bg"></div>
       </div>
     </div>
     <div class="services-cta reveal-up" style="--delay:0.7s">
-      <a href="pages/services.html" class="btn-outline" data-cms="home_services_cta1">View All Services</a>
-      <a href="pages/register.html" class="btn-primary" data-cms="home_services_cta2">Register With Us</a>
+      <a href="/services" class="btn-outline" data-cms="home_services_cta1">View All Services</a>
+      <a href="/register" class="btn-primary" data-cms="home_services_cta2">Register With Us</a>
     </div>
   </div>
 </section>
@@ -189,7 +189,7 @@
   <div class="about-visual">
     <div class="about-video-wrap">
       <video muted loop playsinline preload="none" class="about-video" data-lazy-video>
-        <source src="assets/video1.mp4" type="video/mp4" data-cms-video="home_about_video_url" />
+        <source src="/assets/video1.mp4" type="video/mp4" data-cms-video="home_about_video_url" />
       </video>
       <div class="about-video-overlay"></div>
     </div>
@@ -239,7 +239,7 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
 <!-- WHY US -->
 <section class="why">
   <div class="why-bg-video">
-    <video muted loop playsinline preload="none" data-lazy-video><source src="assets/video3.mp4" type="video/mp4" data-cms-video="home_why_video_url" /></video>
+    <video muted loop playsinline preload="none" data-lazy-video><source src="/assets/video3.mp4" type="video/mp4" data-cms-video="home_why_video_url" /></video>
     <div class="why-overlay"></div>
   </div>
   <div class="container why-content">
@@ -301,7 +301,7 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
   <div class="footer-top">
     <div class="footer-brand">
       <div class="footer-logo-wrap">
-        <img class="footer-logo-img" src="assets/bastel.png" alt="Bastel Logo" />
+        <img class="footer-logo-img" src="/assets/bastel.png" alt="Bastel Logo" />
         <div class="footer-logo">BASTEL <span>PVT LTD</span></div>
       </div>
       <p class="footer-tagline" data-cms="home_footer_tagline">Your Global Trade Catalyst</p>
@@ -309,17 +309,17 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
     </div>
     <div class="footer-links">
       <div class="footer-col"><h5>Services</h5><ul>
-        <li><a href="pages/services.html">Freight Handling</a></li>
-        <li><a href="pages/services.html">Cargo Clearing</a></li>
-        <li><a href="pages/services.html">Transport</a></li>
-        <li><a href="pages/services.html">Fumigation</a></li>
-        <li><a href="pages/services.html">Documentation</a></li>
-        <li><a href="pages/services.html">Import &amp; Export</a></li>
+        <li><a href="/services">Freight Handling</a></li>
+        <li><a href="/services">Cargo Clearing</a></li>
+        <li><a href="/services">Transport</a></li>
+        <li><a href="/services">Fumigation</a></li>
+        <li><a href="/services">Documentation</a></li>
+        <li><a href="/services">Import &amp; Export</a></li>
       </ul></div>
       <div class="footer-col"><h5>Company</h5><ul>
-        <li><a href="index.html#about">About Us</a></li>
-        <li><a href="pages/freight-process.html">Freight Process</a></li>
-        <li><a href="pages/register.html">Register</a></li>
+        <li><a href="/#about">About Us</a></li>
+        <li><a href="/freight-process">Freight Process</a></li>
+        <li><a href="/register">Register</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul></div>
       <div class="footer-col"><h5>Contact</h5><ul>
@@ -357,7 +357,7 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
   </div>
 </div>
 
-<script src="js/shared.js"></script>
-<script src="js/contact.js"></script>
+<script src="/js/shared.js"></script>
+<script src="/js/contact.js"></script>
 </body>
 </html>
