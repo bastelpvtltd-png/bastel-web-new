@@ -179,7 +179,7 @@
 .lane-road::after { content:""; position:absolute; left:0; right:0; top:50%; height:2px; transform:translateY(-50%); background-image:repeating-linear-gradient(to right, rgba(255,255,255,.22) 0 18px, transparent 18px 38px); }
 .lane-svg { position:absolute; inset:0; }
 
-#lane-plane { opacity:.55; }
+#lane-plane { fill:var(--cyan-light); opacity:.6; }
 #lane-crane { fill:var(--cyan); opacity:.6; }
 #lane-lift  { fill:var(--cyan-light); opacity:.75; }
 #lane-ship-1 { opacity:.85; }

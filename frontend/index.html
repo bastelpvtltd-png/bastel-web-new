@@ -321,11 +321,14 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
         <mask id="maskContainer" maskContentUnits="objectBoundingBox" style="mask-type:alpha">
           <image xlink:href="/assets/lane/container.png" x="0" y="0" width="1" height="1" preserveAspectRatio="none"></image>
         </mask>
+        <mask id="maskPlane" maskContentUnits="objectBoundingBox" style="mask-type:alpha">
+          <image xlink:href="/assets/lane/plane.png" x="0" y="0" width="1" height="1" preserveAspectRatio="none"></image>
+        </mask>
       </defs>
 
-      <!-- plane crossing the sky (own natural colors, no mask) -->
-      <image id="lane-plane" xlink:href="/assets/lane/plane.png" y="6%" height="10%" width="16%"></image>
-      <animate xlink:href="#lane-plane" attributeName="x" from="-20%" to="100%" dur="70s" repeatCount="indefinite" fill="freeze"></animate>
+      <!-- plane crossing the sky, nose-right — animated left-to-right so it flies nose-first -->
+      <rect id="lane-plane" mask="url(#maskPlane)" y="4%" height="14%" width="20%"></rect>
+      <animate xlink:href="#lane-plane" attributeName="x" from="-22%" to="100%" dur="70s" repeatCount="indefinite" fill="freeze"></animate>
 
       <!-- fixed crane on the yard, lifting a container (vertical motion only) -->
       <rect id="lane-crane" mask="url(#maskCrane)" x="4%" y="4%" height="88%" width="15%"></rect>
