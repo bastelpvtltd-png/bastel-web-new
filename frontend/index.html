@@ -296,39 +296,37 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
   </div>
 </section>
 
-<!-- SHIPPING LANE — same technique as the reference (SVG <image>+<animate> layers sliding
-     at different depths/speeds), rebuilt with self-hosted, licensed artwork instead of
-     hotlinking another company's assets. Images: Pixabay Content License (free for
-     commercial use, no attribution required) — ship/truck/container/skyline background by
-     Pixabay contributors, crane silhouette by GDJ. All recolored via CSS filter
-     (brightness/invert) to a single brand-toned silhouette look. -->
+<!-- SHIPPING LANE — a real port cross-section instead of icons floating at random
+     heights: a fixed port-skyline backdrop, a sea band where ships hold to one waterline,
+     a road band where trucks hold to one road line, and a fixed crane lifting a container
+     up and down (not sliding sideways like a vehicle). Images: Pixabay Content License
+     (free for commercial use, no attribution required) — ship/truck/container/skyline
+     background by Pixabay contributors, crane silhouette by GDJ. All recolored via CSS
+     filter (brightness/invert) to a single brand-toned silhouette look. -->
 <section class="shipping-lane" aria-hidden="true">
   <div class="lane-row">
     <img class="lane-bg" src="/assets/lane/bg.png" alt="" />
+    <div class="lane-sea"></div>
+    <div class="lane-road"></div>
     <svg class="lane-svg" width="100%" height="100%" preserveAspectRatio="none">
-      <image id="lane-1" xlink:href="/assets/lane/crane.png" y="0%" height="85%" width="16%"></image>
-      <animate xlink:href="#lane-1" attributeName="x" from="-25%" to="100%" dur="140s" repeatCount="indefinite" fill="freeze"></animate>
+      <!-- fixed crane lifting a container (vertical motion only, doesn't slide) -->
+      <image id="lane-crane" xlink:href="/assets/lane/crane.png" x="4%" y="4%" height="88%" width="15%"></image>
+      <image id="lane-lift" xlink:href="/assets/lane/container.png" x="9%" height="10%" width="7%"></image>
+      <animate xlink:href="#lane-lift" attributeName="y" values="24%;72%;24%" dur="16s" repeatCount="indefinite"></animate>
 
-      <image id="lane-2" xlink:href="/assets/lane/crane.png" y="5%" height="68%" width="13%"></image>
-      <animate xlink:href="#lane-2" attributeName="x" from="100%" to="-20%" dur="170s" repeatCount="indefinite" fill="freeze"></animate>
+      <!-- ships holding to one waterline in the sea band -->
+      <image id="lane-ship-1" xlink:href="/assets/lane/ship.png" y="58%" height="16%" width="20%"></image>
+      <animate xlink:href="#lane-ship-1" attributeName="x" from="-25%" to="100%" dur="95s" repeatCount="indefinite" fill="freeze"></animate>
 
-      <image id="lane-3" xlink:href="/assets/lane/ship.png" y="42%" height="26%" width="22%"></image>
-      <animate xlink:href="#lane-3" attributeName="x" from="100%" to="-30%" dur="90s" repeatCount="indefinite" fill="freeze"></animate>
+      <image id="lane-ship-2" xlink:href="/assets/lane/ship.png" y="65%" height="9%" width="13%"></image>
+      <animate xlink:href="#lane-ship-2" attributeName="x" from="100%" to="-18%" dur="130s" repeatCount="indefinite" fill="freeze"></animate>
 
-      <image id="lane-4" xlink:href="/assets/lane/ship.png" y="18%" height="16%" width="15%"></image>
-      <animate xlink:href="#lane-4" attributeName="x" from="-20%" to="100%" dur="110s" repeatCount="indefinite" fill="freeze"></animate>
+      <!-- trucks holding to one road line in the road band -->
+      <image id="lane-truck-1" xlink:href="/assets/lane/truck.png" y="84%" height="12%" width="14%"></image>
+      <animate xlink:href="#lane-truck-1" attributeName="x" from="100%" to="-18%" dur="26s" repeatCount="indefinite" fill="freeze"></animate>
 
-      <image id="lane-5" xlink:href="/assets/lane/truck.png" y="72%" height="20%" width="16%"></image>
-      <animate xlink:href="#lane-5" attributeName="x" from="100%" to="-20%" dur="30s" repeatCount="indefinite" fill="freeze"></animate>
-
-      <image id="lane-6" xlink:href="/assets/lane/truck.png" y="8%" height="12%" width="11%"></image>
-      <animate xlink:href="#lane-6" attributeName="x" from="-15%" to="100%" dur="80s" repeatCount="indefinite" fill="freeze"></animate>
-
-      <image id="lane-7" xlink:href="/assets/lane/container.png" y="80%" height="11%" width="9%"></image>
-      <animate xlink:href="#lane-7" attributeName="x" from="-15%" to="100%" dur="45s" repeatCount="indefinite" fill="freeze"></animate>
-
-      <image id="lane-8" xlink:href="/assets/lane/container.png" y="15%" height="9%" width="7%"></image>
-      <animate xlink:href="#lane-8" attributeName="x" from="100%" to="-12%" dur="65s" repeatCount="indefinite" fill="freeze"></animate>
+      <image id="lane-truck-2" xlink:href="/assets/lane/truck.png" y="89%" height="7%" width="9%"></image>
+      <animate xlink:href="#lane-truck-2" attributeName="x" from="-15%" to="100%" dur="42s" repeatCount="indefinite" fill="freeze"></animate>
     </svg>
   </div>
 </section>

@@ -164,19 +164,25 @@
 .director-msg-name { font-family: var(--font-display); letter-spacing: .1em; font-size: 1.1rem; color: var(--cyan); }
 .director-msg-title { font-size: .78rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-muted); }
 
-/* SHIPPING LANE — SVG <image>+<animate> layers sliding at different depths/speeds,
-   same technique as the reference. brightness(0) invert(1) turns every source PNG into a
-   clean white silhouette (alpha preserved); opacity alone does the depth grading. */
+/* SHIPPING LANE — a port cross-section: fixed skyline backdrop, a sea band ships hold
+   to one waterline in, a road band trucks hold to one road line in, and a fixed crane
+   lifting a container. brightness(0) invert(1) turns every source PNG into a clean white
+   silhouette (alpha preserved); opacity alone does the depth grading. */
 .shipping-lane { position:relative; height:220px; overflow:hidden; background:#0b1410; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
 .lane-row { position:relative; width:100%; height:100%; }
-.lane-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:bottom; filter:brightness(0) invert(1); opacity:.06; }
+.lane-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:bottom; filter:brightness(0) invert(1); opacity:.08; }
+.lane-sea { position:absolute; left:0; right:0; top:56%; height:26%; background:linear-gradient(to bottom, rgba(34,212,240,.06), rgba(34,212,240,.02)); border-top:1px solid rgba(34,212,240,.14); }
+.lane-road { position:absolute; left:0; right:0; bottom:0; height:9%; background:#161c1f; }
+.lane-road::after { content:""; position:absolute; left:0; right:0; top:50%; height:2px; transform:translateY(-50%); background-image:repeating-linear-gradient(to right, rgba(255,255,255,.22) 0 18px, transparent 18px 38px); }
 .lane-svg { position:absolute; inset:0; }
 .lane-svg image { filter:brightness(0) invert(1); }
 
-#lane-1 { opacity:.12; } #lane-2 { opacity:.08; }
-#lane-3 { opacity:.3; }  #lane-4 { opacity:.16; }
-#lane-5 { opacity:.55; } #lane-6 { opacity:.2; }
-#lane-7 { opacity:.45; } #lane-8 { opacity:.22; }
+#lane-crane { opacity:.5; }
+#lane-lift  { opacity:.6; }
+#lane-ship-1 { opacity:.32; }
+#lane-ship-2 { opacity:.16; }
+#lane-truck-1 { opacity:.55; }
+#lane-truck-2 { opacity:.24; }
 
 @media (prefers-reduced-motion: reduce) {
   .lane-svg animate { display: none; }
