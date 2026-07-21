@@ -139,17 +139,26 @@ BLog.info('Page loaded', { page: location.pathname });
   const mobileMenu = document.getElementById('mobileMenu');
   if (!nav) return;
 
+  // Queried once (not on every scroll tick) — sections rarely change after load.
+  const sections = document.querySelectorAll('section[id]');
+  const hashNavLinks = document.querySelectorAll('.nav-link[href^="#"]');
+  let scrollTicking = false;
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-    // Active link highlighting (only for index page sections)
-    let current = '';
-    document.querySelectorAll('section[id]').forEach(sec => {
-      if (window.scrollY + 120 >= sec.offsetTop) current = sec.id;
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+      // Active link highlighting (only for index page sections)
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY + 120 >= sec.offsetTop) current = sec.id;
+      });
+      hashNavLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+      scrollTicking = false;
     });
-    document.querySelectorAll('.nav-link[href^="#"]').forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-    });
-  });
+  }, { passive: true });
 
   // Highlight current page link
   const path = location.pathname.replace(/\//g,'').replace('.html','') || 'index';
@@ -278,20 +287,39 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // ── PARALLAX ─────────────────────────────────────────────────
-window.addEventListener('scroll', () => {
+(function initParallax() {
   const hero = document.querySelector('.hero-video');
-  if (hero) hero.style.transform = `translateY(${window.scrollY * 0.25}px)`;
-});
+  if (!hero) return;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      hero.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+      ticking = false;
+    });
+  }, { passive: true });
+})();
 
 // ── GRAIN ANIMATION ──────────────────────────────────────────
 (function createGrain() {
   const grain = document.querySelector('.hero-grain');
   if (!grain) return;
   let frame = 0;
-  (function animate() {
+  let raf = null;
+  function animate() {
     if (++frame % 2 === 0) grain.style.backgroundPosition = `${Math.random()*100}% ${Math.random()*100}%`;
-    requestAnimationFrame(animate);
-  })();
+    raf = requestAnimationFrame(animate);
+  }
+  // Only repaint the grain while the hero is actually on screen — it was
+  // running forever in the background otherwise, wasting a frame every
+  // ~33ms even after the user had scrolled well past it.
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && raf === null) animate();
+      else if (!e.isIntersecting && raf !== null) { cancelAnimationFrame(raf); raf = null; }
+    });
+  }).observe(grain);
 })();
 
 // ── DYNAMIC ACTIVE NAV STYLE ─────────────────────────────────
