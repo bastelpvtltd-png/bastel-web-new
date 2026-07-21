@@ -167,14 +167,17 @@
 /* SHIPPING LANE — decorative parallax strip (CSS transform animations, GPU-composited) */
 .shipping-lane { position:relative; height:200px; overflow:hidden; background:linear-gradient(to bottom, var(--dark-2), var(--dark)); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
 .lane-track { position:absolute; inset:0; }
-.lane-icon { position:absolute; fill:currentColor; stroke:currentColor; will-change:transform; }
+/* brightness(0) invert(1) turns any source artwork into a clean white silhouette
+   (alpha/transparency is preserved) — opacity alone then does the depth layering,
+   so distant layers are dim and the foreground truck reads brightest. */
+.lane-icon { position:absolute; width:auto; will-change:transform; filter:brightness(0) invert(1); }
 
-.lane-crane-1 { top:2%; height:92%; color:rgba(34,212,240,.14); animation:laneRL 85s linear infinite; }
-.lane-crane-2 { top:4%; height:80%; color:rgba(34,212,240,.1); animation:laneRL 110s linear infinite; animation-delay:-40s; }
-.lane-ship { top:38%; height:34%; color:rgba(94,226,245,.35); animation:laneLR 55s linear infinite; animation-delay:-10s; }
-.lane-truck { bottom:6%; height:26%; color:rgba(26,122,74,.7); animation:laneRL 32s linear infinite; animation-delay:-6s; }
-.lane-container-1 { bottom:10%; height:15%; color:rgba(34,212,240,.55); animation:laneLR 40s linear infinite; animation-delay:-22s; }
-.lane-container-2 { top:14%; height:12%; color:rgba(34,212,240,.2); animation:laneRL 65s linear infinite; animation-delay:-15s; }
+.lane-crane-1 { top:2%; height:92%; opacity:.12; animation:laneRL 85s linear infinite; }
+.lane-crane-2 { top:4%; height:80%; opacity:.08; animation:laneRL 110s linear infinite; animation-delay:-40s; }
+.lane-ship { top:38%; height:34%; opacity:.3; animation:laneLR 55s linear infinite; animation-delay:-10s; }
+.lane-truck { bottom:6%; height:26%; opacity:.55; animation:laneRL 32s linear infinite; animation-delay:-6s; }
+.lane-container-1 { bottom:10%; height:15%; opacity:.45; animation:laneLR 40s linear infinite; animation-delay:-22s; }
+.lane-container-2 { top:14%; height:12%; opacity:.18; animation:laneRL 65s linear infinite; animation-delay:-15s; }
 
 @keyframes laneLR { from { transform:translateX(-30vw); } to { transform:translateX(130vw); } }
 @keyframes laneRL { from { transform:translateX(130vw); } to { transform:translateX(-30vw); } }
