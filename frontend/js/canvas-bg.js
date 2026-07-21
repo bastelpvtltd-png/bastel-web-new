@@ -84,8 +84,8 @@
       this.routes = this.nodes.slice(1).map((n, i) => ({
         from: this.hub, to: n,
         pulses: [
-          { t: (i * 0.37) % 1, speed: 0.09 + (i % 3) * 0.015 },
-          { t: (i * 0.37 + 0.5) % 1, speed: 0.07 + (i % 2) * 0.02 },
+          { t: (i * 0.37) % 1, speed: 0.28 + (i % 3) * 0.06 },
+          { t: (i * 0.37 + 0.5) % 1, speed: 0.22 + (i % 2) * 0.07 },
         ],
       }));
       this.dots = Array.from({ length: 70 }, () => ({
@@ -123,31 +123,35 @@
           const p = this.pointOn(route, i / 40);
           ctx.lineTo(p.x * w, p.y * h);
         }
-        ctx.strokeStyle = rgba(CYAN_RGB, 0.16);
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = rgba(CYAN_RGB, 0.28);
+        ctx.lineWidth = 1.2;
         ctx.stroke();
       });
 
-      // traveling shipment pulses
+      // traveling shipment pulses (with a short glowing trail)
       this.routes.forEach(route => {
         route.pulses.forEach(pulse => {
           pulse.t = (pulse.t + dt * pulse.speed) % 1;
-          const p = this.pointOn(route, pulse.t);
           const glow = Math.sin(pulse.t * Math.PI); // fade in/out along the path
-          ctx.beginPath();
-          ctx.arc(p.x * w, p.y * h, 2.6, 0, Math.PI * 2);
-          ctx.fillStyle = rgba(CYAN_RGB, 0.85 * glow + 0.15);
-          ctx.shadowColor = COLOR.cyan;
-          ctx.shadowBlur = 10;
-          ctx.fill();
-          ctx.shadowBlur = 0;
+          for (let trail = 0; trail < 6; trail++) {
+            const tt = pulse.t - trail * 0.012;
+            if (tt < 0) continue;
+            const p = this.pointOn(route, tt);
+            const trailA = (1 - trail / 6) * (0.9 * glow + 0.15);
+            ctx.beginPath();
+            ctx.arc(p.x * w, p.y * h, trail === 0 ? 3.2 : 3.2 - trail * 0.4, 0, Math.PI * 2);
+            ctx.fillStyle = rgba(CYAN_RGB, trailA);
+            if (trail === 0) { ctx.shadowColor = COLOR.cyan; ctx.shadowBlur = 12; }
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
         });
       });
 
       // nodes
       this.nodes.forEach(n => {
         const px = n.x * w, py = n.y * h;
-        const pulse = 0.6 + Math.sin(this.t * 1.6 + n.x * 6) * 0.4;
+        const pulse = 0.6 + Math.sin(this.t * 2.6 + n.x * 6) * 0.4;
         const baseR = n.hub ? 4.5 : 3;
         // outer breathing halo
         ctx.beginPath();
@@ -178,16 +182,16 @@
       const count = 34;
       this.particles = Array.from({ length: count }, () => ({
         x: Math.random(), y: Math.random(),
-        vx: (Math.random() - 0.5) * 0.02, vy: (Math.random() - 0.5) * 0.02,
-        r: Math.random() * 1.6 + 1,
+        vx: (Math.random() - 0.5) * 0.09, vy: (Math.random() - 0.5) * 0.09,
+        r: Math.random() * 1.8 + 1.2,
       }));
-      this.linkDist = 0.16;
+      this.linkDist = 0.18;
     }
     draw(dt) {
       const { ctx, w, h } = this;
       ctx.clearRect(0, 0, w, h);
       this.particles.forEach(p => {
-        p.x += p.vx * dt * 4; p.y += p.vy * dt * 4;
+        p.x += p.vx * dt; p.y += p.vy * dt;
         if (p.x < 0 || p.x > 1) p.vx *= -1;
         if (p.y < 0 || p.y > 1) p.vy *= -1;
         p.x = Math.min(1, Math.max(0, p.x));
@@ -202,21 +206,22 @@
             ctx.beginPath();
             ctx.moveTo(a.x * w, a.y * h);
             ctx.lineTo(b.x * w, b.y * h);
-            ctx.strokeStyle = rgba(CYAN_RGB, (1 - dist / this.linkDist) * 0.35);
+            ctx.strokeStyle = rgba(CYAN_RGB, (1 - dist / this.linkDist) * 0.45);
             ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
       }
+      // one shared glow pass instead of per-particle shadowBlur (much cheaper)
+      ctx.shadowColor = COLOR.cyan;
+      ctx.shadowBlur = 5;
       this.particles.forEach(p => {
         ctx.beginPath();
         ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(GREEN_RGB, 0.9);
-        ctx.shadowColor = COLOR.cyan;
-        ctx.shadowBlur = 6;
+        ctx.fillStyle = rgba(GREEN_RGB, 0.95);
         ctx.fill();
-        ctx.shadowBlur = 0;
       });
+      ctx.shadowBlur = 0;
     }
   }
 
@@ -224,15 +229,15 @@
   class WhyGrid extends CanvasScene {
     init() {
       this.cell = 46;
-      this.streams = Array.from({ length: 14 }, () => this._newStream());
+      this.streams = Array.from({ length: 22 }, () => this._newStream());
     }
     _newStream() {
       return {
         col: Math.floor(Math.random() * 40),
         y: -Math.random() * 1,
-        len: 0.12 + Math.random() * 0.18,
-        speed: 0.09 + Math.random() * 0.14,
-        a: 0.25 + Math.random() * 0.35,
+        len: 0.14 + Math.random() * 0.22,
+        speed: 0.28 + Math.random() * 0.34,
+        a: 0.4 + Math.random() * 0.45,
       };
     }
     draw(dt) {
@@ -240,7 +245,7 @@
       ctx.clearRect(0, 0, w, h);
 
       // faint grid
-      ctx.strokeStyle = rgba(CYAN_RGB, 0.07);
+      ctx.strokeStyle = rgba(CYAN_RGB, 0.1);
       ctx.lineWidth = 1;
       for (let x = 0; x < w; x += this.cell) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
       for (let y = 0; y < h; y += this.cell) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }

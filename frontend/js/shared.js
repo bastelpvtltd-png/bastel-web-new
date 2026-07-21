@@ -118,17 +118,14 @@ BLog.info('Page loaded', { page: location.pathname });
   const cursorDot = document.getElementById('cursorDot');
   if (!cursor || !cursorDot) return;
 
-  let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+  // The ring's "catch up" trail is a CSS transition on transform (compositor-driven),
+  // not a JS rAF/lerp loop — so it stays smooth even when the main thread is busy
+  // (e.g. the home page's canvas background animations), instead of lagging behind it.
   document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX; mouseY = e.clientY;
-    cursorDot.style.transform = `translate(${mouseX}px,${mouseY}px) translate(-50%,-50%)`;
+    const pos = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
+    cursorDot.style.transform = pos;
+    cursor.style.transform = pos;
   });
-  (function animateCursor() {
-    curX += (mouseX - curX) * 0.12;
-    curY += (mouseY - curY) * 0.12;
-    cursor.style.transform = `translate(${curX}px,${curY}px) translate(-50%,-50%)`;
-    requestAnimationFrame(animateCursor);
-  })();
   document.querySelectorAll('a, button, .service-card, .mvv-card, .why-card, .process-step, .reg-card').forEach(el => {
     el.addEventListener('mouseenter', () => { cursor.style.width='60px'; cursor.style.height='60px'; cursor.style.borderColor='rgba(34,212,240,0.5)'; });
     el.addEventListener('mouseleave', () => { cursor.style.width='40px'; cursor.style.height='40px'; cursor.style.borderColor='var(--cyan)'; });
