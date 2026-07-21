@@ -322,6 +322,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }).observe(grain);
 })();
 
+// ── SHIPPING LANE ──────────────────────────────────────────────
+// Pauses the pure-CSS parallax animation (cheap on its own — GPU-composited
+// transforms) while the strip is scrolled out of view, out of habit from the
+// scroll-jank cleanup above.
+(function initShippingLane() {
+  const lane = document.querySelector('.shipping-lane');
+  if (!lane) return;
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => lane.classList.toggle('lane-paused', !e.isIntersecting));
+  }, { rootMargin: '100px' }).observe(lane);
+})();
+
 // ── DYNAMIC ACTIVE NAV STYLE ─────────────────────────────────
 const dynStyle = document.createElement('style');
 dynStyle.textContent = `.nav-link.active:not(.contact-btn):not(.upcoming-btn){color:var(--cyan)!important;}.nav-link.active:not(.contact-btn):not(.upcoming-btn)::after{width:100%!important;}`;
