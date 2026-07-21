@@ -68,9 +68,7 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-video-wrap">
-    <video class="hero-video" autoplay muted loop playsinline preload="auto">
-      <source src="/assets/video2.mp4" type="video/mp4" data-cms-video="home_hero_video_url" />
-    </video>
+    <canvas class="hero-video" id="heroCanvas"></canvas>
     <div class="hero-overlay"></div>
     <div class="hero-grain"></div>
   </div>
@@ -188,9 +186,7 @@
 <section class="about" id="about">
   <div class="about-visual">
     <div class="about-video-wrap">
-      <video muted loop playsinline preload="none" class="about-video" data-lazy-video>
-        <source src="/assets/video1.mp4" type="video/mp4" data-cms-video="home_about_video_url" />
-      </video>
+      <canvas class="about-video" id="aboutCanvas"></canvas>
       <div class="about-video-overlay"></div>
     </div>
     <div class="about-accent-box">
@@ -239,7 +235,7 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
 <!-- WHY US -->
 <section class="why">
   <div class="why-bg-video">
-    <video muted loop playsinline preload="none" data-lazy-video><source src="/assets/video3.mp4" type="video/mp4" data-cms-video="home_why_video_url" /></video>
+    <canvas id="whyCanvas"></canvas>
     <div class="why-overlay"></div>
   </div>
   <div class="container why-content">
@@ -358,6 +354,7 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
 </div>
 
 <script src="/js/shared.js"></script>
+<script src="/js/canvas-bg.js"></script>
 <script src="/js/contact.js"></script>
 </body>
 </html>
