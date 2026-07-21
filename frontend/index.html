@@ -296,25 +296,43 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
   </div>
 </section>
 
-<!-- SHIPPING LANE — a real port cross-section instead of icons floating at random
-     heights: a fixed port-skyline backdrop, a sea band where ships hold to one waterline,
-     a road band where trucks hold to one road line, and a fixed crane lifting a container
-     up and down (not sliding sideways like a vehicle). Images: Pixabay Content License
-     (free for commercial use, no attribution required) — ship/truck/container/skyline
-     background by Pixabay contributors, crane silhouette by GDJ. All recolored via CSS
-     filter (brightness/invert) to a single brand-toned silhouette look. -->
+<!-- SHIPPING LANE — a real port cross-section: fixed skyline backdrop, a yard/warehouse
+     patch the crane stands on (not the sea), a sea band ships hold to one waterline in, a
+     road band trucks hold to one road line in, a plane crossing the sky, and a fixed crane
+     lifting a container up and down (not sliding sideways like a vehicle). Ship and plane
+     keep their own illustrated colors; crane/truck/container are solid-color silhouettes
+     via an SVG alpha mask (not a hue-guess filter) so the tint is exact. Images: Pixabay
+     Content License (free for commercial use, no attribution required) —
+     ship/truck/container/skyline/plane by Pixabay contributors, crane by GDJ. -->
 <section class="shipping-lane" aria-hidden="true">
   <div class="lane-row">
     <img class="lane-bg" src="/assets/lane/bg.png" alt="" />
+    <div class="lane-yard"></div>
     <div class="lane-sea"></div>
     <div class="lane-road"></div>
     <svg class="lane-svg" width="100%" height="100%" preserveAspectRatio="none">
-      <!-- fixed crane lifting a container (vertical motion only, doesn't slide) -->
-      <image id="lane-crane" xlink:href="/assets/lane/crane.png" x="4%" y="4%" height="88%" width="15%"></image>
-      <image id="lane-lift" xlink:href="/assets/lane/container.png" x="9%" height="10%" width="7%"></image>
+      <defs>
+        <mask id="maskCrane" maskContentUnits="objectBoundingBox" style="mask-type:alpha">
+          <image xlink:href="/assets/lane/crane.png" x="0" y="0" width="1" height="1" preserveAspectRatio="none"></image>
+        </mask>
+        <mask id="maskTruck" maskContentUnits="objectBoundingBox" style="mask-type:alpha">
+          <image xlink:href="/assets/lane/truck.png" x="0" y="0" width="1" height="1" preserveAspectRatio="none"></image>
+        </mask>
+        <mask id="maskContainer" maskContentUnits="objectBoundingBox" style="mask-type:alpha">
+          <image xlink:href="/assets/lane/container.png" x="0" y="0" width="1" height="1" preserveAspectRatio="none"></image>
+        </mask>
+      </defs>
+
+      <!-- plane crossing the sky (own natural colors, no mask) -->
+      <image id="lane-plane" xlink:href="/assets/lane/plane.png" y="6%" height="10%" width="16%"></image>
+      <animate xlink:href="#lane-plane" attributeName="x" from="-20%" to="100%" dur="70s" repeatCount="indefinite" fill="freeze"></animate>
+
+      <!-- fixed crane on the yard, lifting a container (vertical motion only) -->
+      <rect id="lane-crane" mask="url(#maskCrane)" x="4%" y="4%" height="88%" width="15%"></rect>
+      <rect id="lane-lift" mask="url(#maskContainer)" x="9%" height="10%" width="7%"></rect>
       <animate xlink:href="#lane-lift" attributeName="y" values="24%;72%;24%" dur="16s" repeatCount="indefinite"></animate>
 
-      <!-- ships holding to one waterline in the sea band -->
+      <!-- ships holding to one waterline in the sea band (own natural colors) -->
       <image id="lane-ship-1" xlink:href="/assets/lane/ship.png" y="58%" height="16%" width="20%"></image>
       <animate xlink:href="#lane-ship-1" attributeName="x" from="-25%" to="100%" dur="95s" repeatCount="indefinite" fill="freeze"></animate>
 
@@ -322,10 +340,10 @@ Thank you for considering Bastel Pvt Ltd as your logistics partner. We look forw
       <animate xlink:href="#lane-ship-2" attributeName="x" from="100%" to="-18%" dur="130s" repeatCount="indefinite" fill="freeze"></animate>
 
       <!-- trucks holding to one road line in the road band -->
-      <image id="lane-truck-1" xlink:href="/assets/lane/truck.png" y="84%" height="12%" width="14%"></image>
+      <rect id="lane-truck-1" mask="url(#maskTruck)" y="84%" height="12%" width="14%"></rect>
       <animate xlink:href="#lane-truck-1" attributeName="x" from="100%" to="-18%" dur="26s" repeatCount="indefinite" fill="freeze"></animate>
 
-      <image id="lane-truck-2" xlink:href="/assets/lane/truck.png" y="89%" height="7%" width="9%"></image>
+      <rect id="lane-truck-2" mask="url(#maskTruck)" y="89%" height="7%" width="9%"></rect>
       <animate xlink:href="#lane-truck-2" attributeName="x" from="-15%" to="100%" dur="42s" repeatCount="indefinite" fill="freeze"></animate>
     </svg>
   </div>
