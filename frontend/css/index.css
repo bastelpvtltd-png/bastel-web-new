@@ -164,27 +164,22 @@
 .director-msg-name { font-family: var(--font-display); letter-spacing: .1em; font-size: 1.1rem; color: var(--cyan); }
 .director-msg-title { font-size: .78rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-muted); }
 
-/* SHIPPING LANE — decorative parallax strip (CSS transform animations, GPU-composited) */
-.shipping-lane { position:relative; height:200px; overflow:hidden; background:linear-gradient(to bottom, var(--dark-2), var(--dark)); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-.lane-track { position:absolute; inset:0; }
-/* brightness(0) invert(1) turns any source artwork into a clean white silhouette
-   (alpha/transparency is preserved) — opacity alone then does the depth layering,
-   so distant layers are dim and the foreground truck reads brightest. */
-.lane-icon { position:absolute; width:auto; will-change:transform; filter:brightness(0) invert(1); }
+/* SHIPPING LANE — SVG <image>+<animate> layers sliding at different depths/speeds,
+   same technique as the reference. brightness(0) invert(1) turns every source PNG into a
+   clean white silhouette (alpha preserved); opacity alone does the depth grading. */
+.shipping-lane { position:relative; height:220px; overflow:hidden; background:#0b1410; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.lane-row { position:relative; width:100%; height:100%; }
+.lane-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:bottom; filter:brightness(0) invert(1); opacity:.06; }
+.lane-svg { position:absolute; inset:0; }
+.lane-svg image { filter:brightness(0) invert(1); }
 
-.lane-crane-1 { top:2%; height:92%; opacity:.12; animation:laneRL 85s linear infinite; }
-.lane-crane-2 { top:4%; height:80%; opacity:.08; animation:laneRL 110s linear infinite; animation-delay:-40s; }
-.lane-ship { top:38%; height:34%; opacity:.3; animation:laneLR 55s linear infinite; animation-delay:-10s; }
-.lane-truck { bottom:6%; height:26%; opacity:.55; animation:laneRL 32s linear infinite; animation-delay:-6s; }
-.lane-container-1 { bottom:10%; height:15%; opacity:.45; animation:laneLR 40s linear infinite; animation-delay:-22s; }
-.lane-container-2 { top:14%; height:12%; opacity:.18; animation:laneRL 65s linear infinite; animation-delay:-15s; }
+#lane-1 { opacity:.12; } #lane-2 { opacity:.08; }
+#lane-3 { opacity:.3; }  #lane-4 { opacity:.16; }
+#lane-5 { opacity:.55; } #lane-6 { opacity:.2; }
+#lane-7 { opacity:.45; } #lane-8 { opacity:.22; }
 
-@keyframes laneLR { from { transform:translateX(-30vw); } to { transform:translateX(130vw); } }
-@keyframes laneRL { from { transform:translateX(130vw); } to { transform:translateX(-30vw); } }
-
-.shipping-lane.lane-paused .lane-icon { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
-  .lane-icon { animation: none; }
+  .lane-svg animate { display: none; }
 }
 
 @media (max-width: 768px) {

@@ -323,15 +323,14 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // ── SHIPPING LANE ──────────────────────────────────────────────
-// Pauses the pure-CSS parallax animation (cheap on its own — GPU-composited
-// transforms) while the strip is scrolled out of view, out of habit from the
-// scroll-jank cleanup above.
+// Pauses the SVG SMIL <animate> layers (via the native pauseAnimations/
+// unpauseAnimations SVG DOM API) while the strip is scrolled out of view.
 (function initShippingLane() {
-  const lane = document.querySelector('.shipping-lane');
-  if (!lane) return;
+  const svg = document.querySelector('.lane-svg');
+  if (!svg || typeof svg.pauseAnimations !== 'function') return;
   new IntersectionObserver((entries) => {
-    entries.forEach(e => lane.classList.toggle('lane-paused', !e.isIntersecting));
-  }, { rootMargin: '100px' }).observe(lane);
+    entries.forEach(e => (e.isIntersecting ? svg.unpauseAnimations() : svg.pauseAnimations()));
+  }, { rootMargin: '100px' }).observe(svg);
 })();
 
 // ── DYNAMIC ACTIVE NAV STYLE ─────────────────────────────────
