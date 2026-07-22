@@ -42,7 +42,8 @@ const BastelContentReady = (function loadSiteContent() {
   const videoEls = document.querySelectorAll('[data-cms-video]');
   const sectionEls = document.querySelectorAll('[data-cms-section]');
   const targetEls = document.querySelectorAll('[data-cms-target]');
-  if (!textEls.length && !hrefEls.length && !videoEls.length && !sectionEls.length && !targetEls.length) {
+  const logoEls = document.querySelectorAll('[data-cms-logo]');
+  if (!textEls.length && !hrefEls.length && !videoEls.length && !sectionEls.length && !targetEls.length && !logoEls.length) {
     return Promise.resolve(null);
   }
 
@@ -70,6 +71,10 @@ const BastelContentReady = (function loadSiteContent() {
       targetEls.forEach(el => {
         const key = el.getAttribute('data-cms-target');
         if (data[key] != null) el.setAttribute('data-target', data[key]);
+      });
+      logoEls.forEach(el => {
+        const key = el.getAttribute('data-cms-logo');
+        if (data[key] != null) el.src = data[key];
       });
       // Sections default to visible — only an explicit "false" hides them, so a
       // missing/unset flag (nothing saved yet in admin) never disappears content.

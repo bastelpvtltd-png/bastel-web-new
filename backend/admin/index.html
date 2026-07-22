@@ -72,6 +72,16 @@
   .switch input:checked + .slider { background: rgba(26,122,74,.35); border-color: var(--green); }
   .switch input:checked + .slider::before { transform: translateX(18px); background: var(--green-bright, var(--cyan)); }
 
+  /* Media upload rows */
+  .media-row { padding: 1rem 1.1rem; background: var(--dark-2); border: 1px solid var(--border); border-radius: 8px; margin-bottom: .8rem; }
+  .media-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: .6rem; }
+  .media-row-name { font-size: .9rem; color: var(--text); font-weight: 600; }
+  .media-row-size { font-size: .78rem; color: var(--text-muted); }
+  .media-row-size.warn { color: #ffb020; }
+  .media-row-controls { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+  .media-row input[type="file"] { font-size: .78rem; color: var(--text-muted); max-width: 260px; }
+  .media-row-status { font-size: .78rem; color: var(--text-muted); margin-top: .5rem; min-height: 1.1em; }
+
   /* Marketplace item form */
   .item-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; background: var(--dark-2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem; }
   .item-form .field.full { grid-column: 1 / -1; }
@@ -105,6 +115,7 @@
       <button class="tab-btn" data-panel="contentPanel">Site Content</button>
       <button class="tab-btn" data-panel="marketPanel">Marketplace</button>
       <button class="tab-btn" data-panel="sectionsPanel">Sections</button>
+      <button class="tab-btn" data-panel="mediaPanel">Media</button>
     </div>
 
     <div id="regPanel" class="panel active">
@@ -169,6 +180,14 @@
         live site immediately — no redeploy needed.
       </p>
       <div id="sectionsList"></div>
+    </div>
+
+    <div id="mediaPanel" class="panel">
+      <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem;max-width:720px;">
+        Replace the home page's 3 background videos or the site logo. Files commit straight
+        to the live repo and go live in about a minute (Vercel redeploys automatically).
+      </p>
+      <div id="mediaList"></div>
     </div>
   </div>
 </div>
@@ -415,9 +434,74 @@
     });
   }
 
+  // ── MEDIA (video/logo uploads) ────────────────────────────────
+  const MEDIA_SLOTS = [
+    { key: 'hero_video', label: 'Hero Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024 },
+    { key: 'about_video', label: 'About Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024 },
+    { key: 'why_video', label: 'Why-Us Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024 },
+    { key: 'logo', label: 'Site Logo (all pages)', kind: 'image', warnBytes: 2 * 1024 * 1024 },
+  ];
+  function fmtBytes(n) {
+    if (n == null) return 'unknown size';
+    if (n < 1024) return `${n} B`;
+    if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+    return `${(n / 1024 / 1024).toFixed(1)} MB`;
+  }
+  async function loadMedia() {
+    const { data } = await apiFetch('/media', adminKey);
+    const wrap = document.getElementById('mediaList');
+    wrap.innerHTML = MEDIA_SLOTS.map(s => {
+      const info = data[s.key] || {};
+      const big = info.bytes && info.bytes > s.warnBytes;
+      return `<div class="media-row" data-slot="${s.key}">
+        <div class="media-row-top">
+          <span class="media-row-name">${esc(s.label)}</span>
+          <span class="media-row-size ${big ? 'warn' : ''}">${fmtBytes(info.bytes)}${big ? ' — large, may load slowly for visitors' : ''}</span>
+        </div>
+        <div class="media-row-controls">
+          <input type="file" accept="${s.kind === 'video' ? 'video/*' : 'image/*'}" data-file-input />
+          <button class="save-btn" data-upload-btn>Upload</button>
+        </div>
+        <p class="media-row-status" data-status></p>
+      </div>`;
+    }).join('');
+
+    wrap.querySelectorAll('.media-row').forEach(row => {
+      const slot = row.dataset.slot;
+      const cfg = MEDIA_SLOTS.find(s => s.key === slot);
+      const fileInput = row.querySelector('[data-file-input]');
+      const btn = row.querySelector('[data-upload-btn]');
+      const status = row.querySelector('[data-status]');
+      btn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) { status.textContent = 'Choose a file first.'; return; }
+        if (file.size > cfg.warnBytes) {
+          const proceed = confirm(`This file is ${fmtBytes(file.size)} — that's fairly large and may load slowly for visitors. Upload anyway?`);
+          if (!proceed) return;
+        }
+        status.textContent = 'Uploading…';
+        btn.disabled = true;
+        try {
+          const form = new FormData();
+          form.append('slot', slot);
+          form.append('file', file);
+          const res = await fetch(`${API_BASE}/media/upload`, { method: 'POST', headers: { 'x-admin-key': adminKey }, body: form });
+          const json = await res.json();
+          if (!json.success) throw new Error(json.message || 'Upload failed');
+          status.textContent = `✓ ${json.message}`;
+          loadMedia();
+        } catch (err) {
+          status.textContent = `⚠ ${err.message}`;
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    });
+  }
+
   // ── UNLOCK / TABS / REFRESH ──────────────────────────────────
   async function loadAll() {
-    await Promise.all([loadRegistrations(), loadQuotes(), loadContent(), loadMarket()]);
+    await Promise.all([loadRegistrations(), loadQuotes(), loadContent(), loadMarket(), loadMedia()]);
     renderSections();
   }
   function unlock(key) {
