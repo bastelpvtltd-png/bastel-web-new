@@ -370,3 +370,7 @@ body.show-chatbot .chatbot-window { display: flex; }
   .cookie-banner { padding: 1.2rem 1.5rem; }
   .chatbot-window { width: calc(100vw - 2rem); right: 1rem; }
 }
+
+/* Shown by shared.js in place of a page whose section toggle is off in admin */
+.page-unavailable { min-height: 50vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem; }
+.page-unavailable p { color: var(--text-muted); font-size: 1.1rem; max-width: 480px; }

@@ -65,8 +65,11 @@ const BASTEL_CONFIG = {
       // Sections default to visible — only an explicit "false" hides them, so a
       // missing/unset flag (nothing saved yet in admin) never disappears content.
       sectionEls.forEach(el => {
-        const key = `section_${el.getAttribute('data-cms-section')}_enabled`;
-        if (data[key] === 'false') el.style.display = 'none';
+        const sectionKey = el.getAttribute('data-cms-section');
+        if (data[`section_${sectionKey}_enabled`] !== 'false') return;
+        el.style.display = 'none';
+        const fallback = document.querySelector(`[data-cms-section-fallback="${sectionKey}"]`);
+        if (fallback) fallback.style.display = 'block';
       });
     })
     .catch(err => BLog?.error?.('Site content load failed', { error: err.message }));
