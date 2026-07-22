@@ -436,9 +436,9 @@
 
   // ── MEDIA (video/logo uploads) ────────────────────────────────
   const MEDIA_SLOTS = [
-    { key: 'hero_video', label: 'Hero Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024 },
-    { key: 'about_video', label: 'About Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024 },
-    { key: 'why_video', label: 'Why-Us Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024 },
+    { key: 'hero_video', label: 'Hero Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024, contentKey: 'home_hero_video_url' },
+    { key: 'about_video', label: 'About Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024, contentKey: 'home_about_video_url' },
+    { key: 'why_video', label: 'Why-Us Video (home page)', kind: 'video', warnBytes: 15 * 1024 * 1024, contentKey: 'home_why_video_url' },
     { key: 'logo', label: 'Site Logo (all pages)', kind: 'image', warnBytes: 2 * 1024 * 1024 },
   ];
   function fmtBytes(n) {
@@ -461,6 +461,7 @@
         <div class="media-row-controls">
           <input type="file" accept="${s.kind === 'video' ? 'video/*' : 'image/*'}" data-file-input />
           <button class="save-btn" data-upload-btn>Upload</button>
+          ${s.contentKey ? '<button class="btn-secondary" data-remove-btn>Remove video</button>' : ''}
         </div>
         <p class="media-row-status" data-status></p>
       </div>`;
@@ -471,6 +472,7 @@
       const cfg = MEDIA_SLOTS.find(s => s.key === slot);
       const fileInput = row.querySelector('[data-file-input]');
       const btn = row.querySelector('[data-upload-btn]');
+      const removeBtn = row.querySelector('[data-remove-btn]');
       const status = row.querySelector('[data-status]');
       btn.addEventListener('click', async () => {
         const file = fileInput.files[0];
@@ -494,6 +496,19 @@
           status.textContent = `⚠ ${err.message}`;
         } finally {
           btn.disabled = false;
+        }
+      });
+      removeBtn?.addEventListener('click', async () => {
+        if (!confirm(`Remove the ${cfg.label}? It will disappear from the live site (just the background behind it stays).`)) return;
+        removeBtn.disabled = true;
+        status.textContent = 'Removing…';
+        try {
+          await apiFetch('/content', adminKey, { method: 'PUT', body: JSON.stringify({ [cfg.contentKey]: '' }) });
+          status.textContent = '✓ Removed from the live site.';
+        } catch (err) {
+          status.textContent = `⚠ ${err.message}`;
+        } finally {
+          removeBtn.disabled = false;
         }
       });
     });

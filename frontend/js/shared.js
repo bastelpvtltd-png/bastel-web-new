@@ -61,9 +61,15 @@ const BastelContentReady = (function loadSiteContent() {
       });
       videoEls.forEach(source => {
         const key = source.getAttribute('data-cms-video');
+        const video = source.closest('video');
+        if (data[key] === '') {
+          // Removed from the admin panel — hide the video, leaving just
+          // whatever background/overlay sits behind it.
+          if (video) video.style.display = 'none';
+          return;
+        }
         if (data[key] == null || data[key] === source.getAttribute('src')) return;
         source.setAttribute('src', data[key]);
-        const video = source.closest('video');
         if (!video) return;
         video.load();
         if (!video.hasAttribute('data-lazy-video')) video.play().catch(() => {});
