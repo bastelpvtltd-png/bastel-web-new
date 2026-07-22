@@ -31,22 +31,23 @@ const seenIn = {}; // key -> [files]
 
 for (const file of files) {
   const html = fs.readFileSync(file, 'utf8');
-  const re = /data-cms(-video)?="([a-z0-9_]+)"/g;
+  const re = /data-cms(-video|-target)?="([a-z0-9_]+)"/g;
   let m;
   while ((m = re.exec(html))) {
-    const isVideo = !!m[1];
+    const isVideo = m[1] === '-video';
+    const isTarget = m[1] === '-target';
     const key = m[2];
     seenIn[key] = seenIn[key] || [];
     seenIn[key].push(path.relative(FRONTEND, file));
     if (values[key] !== undefined) continue; // already captured a value
     const tagEnd = html.indexOf('>', m.index);
     if (tagEnd === -1) continue;
-    if (isVideo) {
-      // default value is this tag's own src="..." attribute, not leaf text
+    if (isVideo || isTarget) {
+      // default value is this tag's own src="..." (video) or data-target="..." attribute, not leaf text
       const tagStart = html.lastIndexOf('<', m.index);
       const tag = html.slice(tagStart, tagEnd + 1);
-      const srcMatch = tag.match(/\ssrc="([^"]*)"/);
-      values[key] = srcMatch ? decodeEntities(srcMatch[1]) : '';
+      const attrMatch = tag.match(isVideo ? /\ssrc="([^"]*)"/ : /\sdata-target="([^"]*)"/);
+      values[key] = attrMatch ? decodeEntities(attrMatch[1]) : '';
       continue;
     }
     // find the end of the opening tag this attribute lives in, then read

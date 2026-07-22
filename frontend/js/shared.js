@@ -33,18 +33,23 @@ const BASTEL_CONFIG = {
 // ── SITE CONTENT (admin-editable via /admin) ───────────────────
 // Populates elements marked [data-cms="key"] (text) or [data-cms-href="key"]
 // (href/mailto/tel) with the live values from /api/content. Elements keep
-// their static fallback text until/unless this fetch succeeds.
-(function loadSiteContent() {
+// their static fallback text until/unless this fetch succeeds. Exposes the
+// fetch as a promise so other scripts (e.g. the stat counters, which read
+// data-target once and must not fire before it's updated) can wait on it.
+const BastelContentReady = (function loadSiteContent() {
   const textEls = document.querySelectorAll('[data-cms]');
   const hrefEls = document.querySelectorAll('[data-cms-href]');
   const videoEls = document.querySelectorAll('[data-cms-video]');
   const sectionEls = document.querySelectorAll('[data-cms-section]');
-  if (!textEls.length && !hrefEls.length && !videoEls.length && !sectionEls.length) return;
+  const targetEls = document.querySelectorAll('[data-cms-target]');
+  if (!textEls.length && !hrefEls.length && !videoEls.length && !sectionEls.length && !targetEls.length) {
+    return Promise.resolve(null);
+  }
 
-  fetch(`${BASTEL_CONFIG.API_BASE}/content`)
+  return fetch(`${BASTEL_CONFIG.API_BASE}/content`)
     .then(res => res.json())
     .then(({ success, data }) => {
-      if (!success || !data) return;
+      if (!success || !data) return null;
       textEls.forEach(el => {
         const key = el.getAttribute('data-cms');
         if (data[key] != null) el.textContent = data[key];
@@ -62,6 +67,10 @@ const BASTEL_CONFIG = {
         video.load();
         if (!video.hasAttribute('data-lazy-video')) video.play().catch(() => {});
       });
+      targetEls.forEach(el => {
+        const key = el.getAttribute('data-cms-target');
+        if (data[key] != null) el.setAttribute('data-target', data[key]);
+      });
       // Sections default to visible — only an explicit "false" hides them, so a
       // missing/unset flag (nothing saved yet in admin) never disappears content.
       sectionEls.forEach(el => {
@@ -71,8 +80,9 @@ const BASTEL_CONFIG = {
         const fallback = document.querySelector(`[data-cms-section-fallback="${sectionKey}"]`);
         if (fallback) fallback.style.display = 'block';
       });
+      return data;
     })
-    .catch(err => BLog?.error?.('Site content load failed', { error: err.message }));
+    .catch(err => { BLog?.error?.('Site content load failed', { error: err.message }); return null; });
 })();
 
 // ── LOGGER ──────────────────────────────────────────────────
@@ -289,11 +299,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     requestAnimationFrame(update);
   };
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('.stat-num').forEach(animateCounter); obs.unobserve(e.target); } });
-  }, { threshold: 0.5 });
   const heroStats = document.querySelector('.hero-stats');
-  if (heroStats) obs.observe(heroStats);
+  if (!heroStats) return;
+  // Wait for the CMS data-target overrides above to land before observing, so a
+  // counter never animates to the old hardcoded number and finishes just before
+  // the real value arrives. Capped so a slow/failed content fetch doesn't block
+  // the counters from ever running.
+  Promise.race([BastelContentReady, new Promise(resolve => setTimeout(resolve, 800))]).then(() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('.stat-num').forEach(animateCounter); obs.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    obs.observe(heroStats);
+  });
 })();
 
 // ── PARALLAX ─────────────────────────────────────────────────
