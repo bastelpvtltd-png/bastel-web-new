@@ -38,7 +38,8 @@ const BASTEL_CONFIG = {
   const textEls = document.querySelectorAll('[data-cms]');
   const hrefEls = document.querySelectorAll('[data-cms-href]');
   const videoEls = document.querySelectorAll('[data-cms-video]');
-  if (!textEls.length && !hrefEls.length && !videoEls.length) return;
+  const sectionEls = document.querySelectorAll('[data-cms-section]');
+  if (!textEls.length && !hrefEls.length && !videoEls.length && !sectionEls.length) return;
 
   fetch(`${BASTEL_CONFIG.API_BASE}/content`)
     .then(res => res.json())
@@ -60,6 +61,12 @@ const BASTEL_CONFIG = {
         if (!video) return;
         video.load();
         if (!video.hasAttribute('data-lazy-video')) video.play().catch(() => {});
+      });
+      // Sections default to visible — only an explicit "false" hides them, so a
+      // missing/unset flag (nothing saved yet in admin) never disappears content.
+      sectionEls.forEach(el => {
+        const key = `section_${el.getAttribute('data-cms-section')}_enabled`;
+        if (data[key] === 'false') el.style.display = 'none';
       });
     })
     .catch(err => BLog?.error?.('Site content load failed', { error: err.message }));

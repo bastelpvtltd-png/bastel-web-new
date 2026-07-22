@@ -62,6 +62,16 @@
   .cms-group .content-form { padding: 0 1rem 1.2rem; max-width: none; }
   .field.hidden { display: none; }
 
+  /* Section toggles */
+  .section-row { display: flex; justify-content: space-between; align-items: center; padding: .9rem 1.1rem; background: var(--dark-2); border: 1px solid var(--border); border-radius: 8px; margin-bottom: .6rem; }
+  .section-row-name { font-size: .9rem; color: var(--text); }
+  .switch { position: relative; display: inline-block; width: 42px; height: 24px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .slider { position: absolute; inset: 0; background: var(--dark-3); border: 1px solid var(--border); border-radius: 24px; cursor: pointer; transition: background .2s; }
+  .switch .slider::before { content: ""; position: absolute; width: 16px; height: 16px; left: 3px; top: 2px; background: var(--text-muted); border-radius: 50%; transition: transform .2s, background .2s; }
+  .switch input:checked + .slider { background: rgba(26,122,74,.35); border-color: var(--green); }
+  .switch input:checked + .slider::before { transform: translateX(18px); background: var(--green-bright, var(--cyan)); }
+
   /* Marketplace item form */
   .item-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; background: var(--dark-2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem; }
   .item-form .field.full { grid-column: 1 / -1; }
@@ -94,6 +104,7 @@
       <button class="tab-btn" data-panel="quotePanel">Quotes / Contact Messages</button>
       <button class="tab-btn" data-panel="contentPanel">Site Content</button>
       <button class="tab-btn" data-panel="marketPanel">Marketplace</button>
+      <button class="tab-btn" data-panel="sectionsPanel">Sections</button>
     </div>
 
     <div id="regPanel" class="panel active">
@@ -150,6 +161,14 @@
         <thead><tr><th>Title</th><th>Category</th><th>Price</th><th>Status</th><th>Created</th><th></th></tr></thead>
         <tbody id="marketBody"></tbody>
       </table></div>
+    </div>
+
+    <div id="sectionsPanel" class="panel">
+      <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.2rem;max-width:720px;">
+        Turn whole sections of the home page on or off. Off sections disappear from the
+        live site immediately — no redeploy needed.
+      </p>
+      <div id="sectionsList"></div>
     </div>
   </div>
 </div>
@@ -357,9 +376,46 @@
   document.getElementById('itemCancelBtn').addEventListener('click', resetItemForm);
   document.getElementById('saveContentBtn').addEventListener('click', saveContent);
 
+  // ── SECTIONS (on/off toggles) ────────────────────────────────
+  const SECTION_NAMES = {
+    services: 'Services (home page)', about: 'About Us (home page)',
+    director_msg: "Director's Message (home page)", why: 'Why Choose Us (home page)',
+    shipping_lane: 'Shipping Lane animation (home page)', contact: 'Contact (home page)',
+  };
+  function renderSections() {
+    const wrap = document.getElementById('sectionsList');
+    wrap.innerHTML = Object.entries(SECTION_NAMES).map(([key, label]) => {
+      const flagKey = `section_${key}_enabled`;
+      const enabled = contentData[flagKey] !== 'false'; // default on until explicitly turned off
+      return `<div class="section-row">
+        <span class="section-row-name">${esc(label)}</span>
+        <label class="switch">
+          <input type="checkbox" data-section-key="${esc(flagKey)}" ${enabled ? 'checked' : ''} />
+          <span class="slider"></span>
+        </label>
+      </div>`;
+    }).join('');
+    wrap.querySelectorAll('[data-section-key]').forEach(input => {
+      input.addEventListener('change', async () => {
+        const flagKey = input.dataset.sectionKey;
+        contentData[flagKey] = String(input.checked);
+        input.disabled = true;
+        try {
+          await apiFetch('/content', adminKey, { method: 'PUT', body: JSON.stringify({ [flagKey]: String(input.checked) }) });
+        } catch (err) {
+          input.checked = !input.checked; // revert on failure
+          alert(`Could not save: ${err.message}`);
+        } finally {
+          input.disabled = false;
+        }
+      });
+    });
+  }
+
   // ── UNLOCK / TABS / REFRESH ──────────────────────────────────
   async function loadAll() {
     await Promise.all([loadRegistrations(), loadQuotes(), loadContent(), loadMarket()]);
+    renderSections();
   }
   function unlock(key) {
     adminKey = key;
