@@ -347,6 +347,7 @@
         <td>${esc(i.title)}</td><td>${esc(i.category) || '—'}</td><td>${esc(i.price) || '—'}</td>
         <td>${badge(i.status)}</td><td>${fmtDate(i.created_at)}</td>
         <td class="row-actions">
+          <button class="row-edit" data-hide="${i.id}">${i.status === 'active' ? 'Hide' : 'Show'}</button>
           <button class="row-edit" data-edit="${i.id}">Edit</button>
           <button class="row-delete" data-delete="${i.id}">Delete</button>
         </td>
@@ -354,6 +355,17 @@
 
     document.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => editItem(btn.dataset.edit)));
     document.querySelectorAll('[data-delete]').forEach(btn => btn.addEventListener('click', () => deleteItem(btn.dataset.delete)));
+    document.querySelectorAll('[data-hide]').forEach(btn => btn.addEventListener('click', () => toggleItem(btn.dataset.hide)));
+  }
+  async function toggleItem(id) {
+    const item = marketItems.find(i => i.id === id);
+    if (!item) return;
+    const nextStatus = item.status === 'active' ? 'inactive' : 'active';
+    await apiFetch(`/marketplace/${id}`, adminKey, {
+      method: 'PUT',
+      body: JSON.stringify({ title: item.title, description: item.description, price: item.price, image_link: item.image_link, category: item.category, status: nextStatus }),
+    });
+    await loadMarket();
   }
   async function loadMarket() {
     marketItems = (await apiFetch('/marketplace/all', adminKey)).data;
