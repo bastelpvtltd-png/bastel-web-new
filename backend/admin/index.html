@@ -537,10 +537,32 @@
       localStorage.setItem(KEY_STORAGE, key);
       lockScreen.style.display = 'none';
       dashboard.style.display = 'block';
+      resetIdleTimer();
     }).catch(err => {
       lockError.textContent = err.message === 'unauthorized' ? 'Wrong admin key.' : 'Could not reach the backend — is it running (node server.js)?';
     });
   }
+
+  // ── AUTO-LOGOUT AFTER 10 MINUTES OF INACTIVITY ─────────────────
+  const IDLE_LIMIT_MS = 10 * 60 * 1000;
+  let idleTimer = null;
+  function lockOut(message) {
+    adminKey = null;
+    localStorage.removeItem(KEY_STORAGE);
+    dashboard.style.display = 'none';
+    lockScreen.style.display = 'flex';
+    document.getElementById('adminKeyInput').value = '';
+    lockError.textContent = message || '';
+    if (idleTimer) clearTimeout(idleTimer);
+  }
+  function resetIdleTimer() {
+    if (!adminKey) return;
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => lockOut('Logged out after 10 minutes of inactivity.'), IDLE_LIMIT_MS);
+  }
+  ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
+    document.addEventListener(evt, () => { if (adminKey) resetIdleTimer(); }, { passive: true });
+  });
 
   document.getElementById('unlockBtn').addEventListener('click', () => {
     const key = document.getElementById('adminKeyInput').value.trim();
