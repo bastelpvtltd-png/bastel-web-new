@@ -200,28 +200,44 @@
   .shipping-lane { height: 130px; }
 }
 
-.footer-socials {
+/* Social Media Icons Styling */
+.social-links-container {
+  margin-top: 25px;
+}
+
+.social-links-container strong {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.social-icons {
   display: flex;
   gap: 12px;
-  margin-top: 15px;
   align-items: center;
 }
 
-.footer-socials a {
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f1f3f5;
+  color: #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  color: #ffffff;
-  text-decoration: none;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
-.footer-socials a:hover {
-  background-color: #0056b3; /* ඔබේ වෙබ් අඩවියේ Theme color එක අනුව මෙය වෙනස් කළ හැක */
-  color: #ffffff;
+/* Hover Effects with Official Brand Colors */
+.social-icon:hover {
   transform: translateY(-3px);
+  color: #ffffff;
 }
+
+.social-icon.whatsapp:hover { background-color: #25D366; }
+.social-icon.facebook:hover { background-color: #1877F2; }
+.social-icon.instagram:hover { background-color: #E4405F; }
+.social-icon.threads:hover { background-color: #000000; }
+.social-icon.twitter:hover { background-color: #000000; }
