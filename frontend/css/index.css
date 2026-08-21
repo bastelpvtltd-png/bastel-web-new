@@ -199,3 +199,29 @@
   .director-msg-text { font-size: 1rem; }
   .shipping-lane { height: 130px; }
 }
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+  align-items: center;
+}
+
+.footer-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-socials a:hover {
+  background-color: #0056b3; /* ඔබේ වෙබ් අඩවියේ Theme color එක අනුව මෙය වෙනස් කළ හැක */
+  color: #ffffff;
+  transform: translateY(-3px);
+}
