@@ -2,15 +2,23 @@
 const nodemailer = require('nodemailer');
 const logger = require('../middleware/logger');
 
+// Dynamically use live domain or fallback to new domain
+const SITE_URL = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://www.bastellogistics.com';
+
 function esc(str) {
   return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+const smtpPort = Number(process.env.SMTP_PORT || 587);
+
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT || 587),
-  secure: false,
-  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  port: smtpPort,
+  secure: smtpPort === 465, // 465 නම් true, 587 නම් false
+  auth: { 
+    user: process.env.SMTP_USER, 
+    pass: process.env.SMTP_PASS 
+  },
   pool: true,
   maxConnections: 3,
 });
@@ -59,7 +67,7 @@ function registrationEmailHtml({ full_name, trade_type, company_name, commodity,
     <p style="margin:0 0 24px;font-size:13px;line-height:1.6;color:#7aa88a;">
       If any of the above needs correcting, just reply to this email and let us know.
     </p>
-    <a href="https://bastel-web-new.vercel.app" style="display:inline-block;background:#22d4f0;color:#060c0a;text-decoration:none;font-weight:600;font-size:14px;padding:12px 24px;border-radius:6px;">Visit Bastel Pvt Ltd →</a>
+    <a href="${SITE_URL}" style="display:inline-block;background:#22d4f0;color:#060c0a;text-decoration:none;font-weight:600;font-size:14px;padding:12px 24px;border-radius:6px;">Visit Bastel Pvt Ltd →</a>
   `);
 }
 
@@ -72,7 +80,7 @@ function contactClientEmailHtml({ name, service, message }) {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f1c16;border:1px solid rgba(26,122,74,0.3);border-radius:8px;margin-bottom:20px;">
       <tr><td style="padding:16px 20px;font-size:13px;line-height:1.7;color:#e4f0ea;">${esc(message)}</td></tr>
     </table>
-    <a href="https://bastel-web-new.vercel.app" style="display:inline-block;background:#22d4f0;color:#060c0a;text-decoration:none;font-weight:600;font-size:14px;padding:12px 24px;border-radius:6px;">Visit Bastel Pvt Ltd →</a>
+    <a href="${SITE_URL}" style="display:inline-block;background:#22d4f0;color:#060c0a;text-decoration:none;font-weight:600;font-size:14px;padding:12px 24px;border-radius:6px;">Visit Bastel Pvt Ltd →</a>
   `);
 }
 
