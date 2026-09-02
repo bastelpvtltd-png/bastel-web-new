@@ -42,7 +42,7 @@ function wrapper(headline, bodyHtml) {
           </tr>
           <tr>
             <td style="padding:20px 32px;border-top:1px solid rgba(34,212,240,0.12);font-size:12px;color:#7aa88a;">
-              Bastel Pvt Ltd · 145/3 Swarnachithya Road, Grandpass, Colombo 14 · <a href="mailto:bastel.pvt.ltd@gmail.com" style="color:#5ee2f5;">bastel.pvt.ltd@gmail.com</a>
+              Bastel Pvt Ltd · 145/3 Swarnachithya Road, Grandpass, Colombo 14 · <a href="mailto:info@bastellogistics.com" style="color:#5ee2f5;">info@bastellogistics.com</a>
             </td>
           </tr>
         </table>
@@ -57,7 +57,7 @@ function registrationEmailHtml({ full_name, trade_type, company_name, commodity,
   return wrapper('Registration Successful ✓', `
     <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#e4f0ea;">
       Hi <strong>${esc(full_name)}</strong>,<br/>
-      Your registration with Bastel Pvt Ltd as an <strong>${esc(typeLabel)}</strong> has been received and confirmed. Our team will review your details and get back to you within 2 business days.
+      Your registration with Bastel Pvt Ltd as an <strong>${esc(typeLabel)}</strong> has been received and confirmed. Our team will review your details and get back to you within 3 business days.
     </p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f1c16;border:1px solid rgba(26,122,74,0.3);border-radius:8px;margin-bottom:20px;">
       <tr><td style="padding:16px 20px;font-size:14px;color:#7aa88a;">Company</td><td style="padding:16px 20px;font-size:14px;color:#e4f0ea;text-align:right;">${esc(company_name) || '—'}</td></tr>
